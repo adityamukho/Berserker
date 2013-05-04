@@ -1,15 +1,12 @@
 //Required modules
 var config = require('./config'),
         connector = require(__dirname + '/connectors/' + config.berserker_opts.connector),
-        cp = require('child_process'),
-        assert = require('assert'),
-        fs = require('fs'),
-        socket = require('socket.io');
+        cp = require('child_process');
 
 //Argument array for the aria2c process
 var args = [
     '--enable-rpc=true',
-    '--rpc-listen-all=false',
+    '--rpc-listen-all=true',
     '-D'
 ];
 for (var key in config.aria2c_opts) {
@@ -25,13 +22,10 @@ aria2c.unref();
 //Connect with aria2c over JSONRPC
 connector.connect(config);
 
+//Test
 var goptions = {
-    jsonrpc: '2.0',
-    id: 'berserker',
     method: 'aria2.getGlobalOption'
 };
 connector.send(goptions, function(result) {
-    assert.ifError(result.err);
-    console.log('%d -> %j', result.res.statusCode, result.res.headers);
-    console.log('%j', result.obj);
+    console.dir(result.obj);
 });

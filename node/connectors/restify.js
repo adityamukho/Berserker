@@ -12,14 +12,11 @@ function connect(config) {
 }
 
 function send(command, callback) {
+    command.jsonrpc = '2.0';
+    command.id = 'berserker';
     client.post('/jsonrpc', command, function(err, req, res, obj) {
         if (typeof callback === 'function') {
-            callback({
-                err: err,
-                req: req,
-                res: res,
-                obj: obj
-            });
+            callback({err: err, req: req, res: res, obj: obj});
         }
     });
 }

@@ -14,7 +14,8 @@ var config = {
     },
     berserker_opts: {
         aria2c_executable: 'aria2c',
-        connector: 'rest'
+//        connector: 'websocket'
+        connector: 'restify'
     }
 };
 
