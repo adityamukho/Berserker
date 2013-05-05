@@ -40,13 +40,13 @@ function connect(config) {
 function send(command, callback) {
     command.jsonrpc = '2.0';
     command.id = 'berserker';
-    client.send(command);
-    client.on('message', function(data) {
-        console.dir(data);
-        if (typeof callback === 'function') {
-            callback(data);
-        }
-    });
+//    client.send(command);
+//    client.on('message', function(data) {
+//        console.dir(data);
+//        if (typeof callback === 'function') {
+//            callback(data);
+//        }
+//    });
 }
 
 // Functions which will be available to external callers

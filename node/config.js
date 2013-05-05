@@ -5,8 +5,8 @@ var config = {
         'log': '/home/aditya/.aria2/aria2.log',
         'log-level': 'error',
         'dht-listen-port': 6801,
-//        'rpc-user': 'aditya',
-//        'rpc-passwd': 'booger',
+        'rpc-user': 'aditya',
+        'rpc-passwd': 'booger',
         'min-split-size': '1M',
         'max-connection-per-server': 4,
         'save-session': '/home/aditya/.aria2/session',
@@ -14,8 +14,9 @@ var config = {
     },
     berserker_opts: {
         aria2c_executable: 'aria2c',
-//        connector: 'websocket'
-        connector: 'restify'
+//        connector: 'websocket',
+        connector: 'restify',
+        server_port: 8000
     }
 };
 
