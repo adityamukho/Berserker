@@ -1,0 +1,15 @@
+<input type="text" data-ng-model="query" placeholder="Filter"/>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Setting</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="(key, value) in settings.result | kvFilter:query">
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+        </tr>
+    </tbody>
+</table>

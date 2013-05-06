@@ -31,6 +31,7 @@ function init(config, conn) {
                 next(err);
                 return;
             }
+//            console.dir(result.obj);
             res.setHeader('Content-Type', 'application/json');
             res.writeHead(200);
             res.end(JSON.stringify(result.obj));
@@ -38,6 +39,7 @@ function init(config, conn) {
         });
     });
 
+    //IMP: This is a catch-all route. Must be placed last.
     server.get(/(.*)/, function sendFile(req, res, next) {
 //        console.dir(req.params);
         var filename = (req.params[0] === '/') ? __dirname + '/../ng/app/index.html' : __dirname + '/../ng/app/'
