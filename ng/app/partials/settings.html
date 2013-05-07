@@ -7,7 +7,7 @@
         </div>
     </div>
 </div>
-<form id="settings-form" novalidate>
+<form id="settings-form" novalidate name="form">
     <table class="table table-hover table-bordered">
         <thead>
             <tr>
@@ -20,7 +20,7 @@
             <tr data-ng-repeat="setting in settings | settingsFilter:filter">
                 <td>{{$index + 1}}</td>
                 <td>{{setting.key}}</td>
-                <td><input type="text" data-ng-model="setting.value" name="{{setting.key}}"/></td>
+                <td><input type="text" data-ng-model="setting.value" name="{{setting.key}}" data-ng-change="markDirty(setting)" data-ng-class="{'ng-dirty': setting.dirty}"/></td>
             </tr>
         </tbody>
     </table>

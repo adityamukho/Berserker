@@ -21,13 +21,13 @@ angular.module('Berserker', ['Berserker.filters', 'Berserker.services', 'Berserk
             }]);
 
 /* Controllers */
-function DownloadListCtrl($scope, Download) {
-    $scope.downloads = Download.query( );
+function DownloadListCtrl($scope, Command) {
+    $scope.downloads = Command.get({command: 'aria2.getGlobalOption'});
 }
-DownloadListCtrl.$inject = ['$scope', 'Download'];
+DownloadListCtrl.$inject = ['$scope', 'Command'];
 
-function SettingsCtrl($scope, Settings) {
-    var res = Settings.query(function() {
+function SettingsCtrl($scope, Command) {
+    var res = Command.get({command: 'aria2.getGlobalOption'}, function() {
         $scope.master = [];
         angular.forEach(res.result, function(value, key) {
             $scope.master.push({
@@ -50,7 +50,10 @@ function SettingsCtrl($scope, Settings) {
                 changeset[$scope.settings[i].key] = $scope.settings[i].value;
             }
         }
-        console.dir(changeset);
+        Command.exec({
+            command: 'aria2.changeGlobalOption',
+            data: changeset
+        });
     }
 
     $scope.isUnchanged = function() {
@@ -71,8 +74,12 @@ function SettingsCtrl($scope, Settings) {
     $scope.toggleModified = function() {
         $scope.filter.modified = !$scope.filter.modified;
     };
+
+    $scope.markDirty = function(setting) {
+        setting.dirty = true;
+    };
 }
-SettingsCtrl.$inject = ['$scope', 'Settings'];
+SettingsCtrl.$inject = ['$scope', 'Command'];
 
 /* Directives */
 angular.module('Berserker.directives', ['$strap.directives'])
@@ -94,7 +101,7 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
         if (typeof items === 'object') {
             for (var i = 0; i < items.length; ++i) {
                 if ((items[i].key + items[i].value).indexOf(field.query) !== -1) {
-                    if (!field.modified || $('input[name=' + items[i].key + ']').hasClass('ng-dirty')) {
+                    if (!field.modified || items[i].dirty) {
                         result.push(items[i]);
                     }
                 }
@@ -106,19 +113,13 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
 
 /* Services */
 angular.module('Berserker.services', ['ngResource']).value('version', '0.1')
-        .factory('Download', ['$resource', function($resource) {
-        return $resource('/command/aria2.getGlobalOption', {}, {
-            query: {
-                method: 'GET',
-                isArray: true
-            }
-        });
-    }])
-        .factory('Settings', ['$resource', function($resource) {
-        return $resource('/command/aria2.getGlobalOption', {}, {
-            query: {
-                method: 'GET',
-                isArray: false
+        .factory('Command', ['$resource', function($resource) {
+        return $resource('/command/:command', {command: ''}, {
+            exec: {
+                method: 'POST',
+                params: {
+                    data: ''
+                }
             }
         });
     }]);
