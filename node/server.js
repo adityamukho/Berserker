@@ -17,8 +17,8 @@ function init(config, conn) {
     //    });
     //});
 
-    server.listen(config.berserker_opts.server_port, function() {
-        console.log('socket.io server listening at %s', server.url);
+    server.listen(config.berserker.server_port, function() {
+        console.log('REST server listening at %s', server.url);
     });
 
     //Routes

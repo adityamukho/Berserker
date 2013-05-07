@@ -1,15 +1,29 @@
-<input type="text" data-ng-model="query" placeholder="Filter"/>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Setting</th>
-            <th>Value</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr data-ng-repeat="(key, value) in settings.result | kvFilter:query">
-            <td>{{key}}</td>
-            <td>{{value}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="control-group">
+    <div class="controls">
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-search"></i></span>
+            <input type="text" data-ng-model="filter.query" placeholder="Search"/>
+            <button type="button" class="btn" data-toggle="button" data-ng-click="toggleModified()" id="mod">Show Modified Only</button>
+        </div>
+    </div>
+</div>
+<form id="settings-form" novalidate>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Setting</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="setting in settings | settingsFilter:filter">
+                <td>{{$index + 1}}</td>
+                <td>{{setting.key}}</td>
+                <td><input type="text" data-ng-model="setting.value" name="{{setting.key}}"/></td>
+            </tr>
+        </tbody>
+    </table>
+    <button data-ng-click="update()" data-ng-disabled="isUnchanged()" class="btn btn-primary">Save</button>
+    <button data-ng-click="reset()" data-ng-disabled="isUnchanged()" class="btn">Reset</button>
+</form>

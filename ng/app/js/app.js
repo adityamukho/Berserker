@@ -27,8 +27,50 @@ function DownloadListCtrl($scope, Download) {
 DownloadListCtrl.$inject = ['$scope', 'Download'];
 
 function SettingsCtrl($scope, Settings) {
-    $scope.settings = Settings.query( );
-    $scope.query = '';
+    var res = Settings.query(function() {
+        $scope.master = [];
+        angular.forEach(res.result, function(value, key) {
+            $scope.master.push({
+                key: key,
+                value: value
+            });
+        });
+        $scope.settings = angular.copy($scope.master);
+    });
+
+    $scope.filter = {
+        query: '',
+        modified: false
+    };
+
+    $scope.update = function() {
+        var changeset = {};
+        for (var i = 0; i < $scope.settings.length; ++i) {
+            if (!angular.equals($scope.settings[i], $scope.master[i])) {
+                changeset[$scope.settings[i].key] = $scope.settings[i].value;
+            }
+        }
+        console.dir(changeset);
+    }
+
+    $scope.isUnchanged = function() {
+        return angular.equals($scope.settings, $scope.master);
+    };
+
+    $scope.reset = function() {
+        $scope.settings = angular.copy($scope.master);
+        $scope.filter.query = '';
+        if ($scope.filter.modified) {
+            $('#mod').button('toggle');
+            $scope.filter.modified = false;
+        }
+        $('ng-dirty').removeClass('ng-dirty').addClass('ng-pristine');
+        $("html, body").animate({scrollTop: 0}, "slow");
+    };
+
+    $scope.toggleModified = function() {
+        $scope.filter.modified = !$scope.filter.modified;
+    };
 }
 SettingsCtrl.$inject = ['$scope', 'Settings'];
 
@@ -46,14 +88,18 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
         return function(text) {
             return String(text).replace(/\%VERSION\%/mg, version);
         }
-    }]).filter('kvFilter', function() {
+    }]).filter('settingsFilter', function() {
     return function(items, field) {
-        var result = {};
-        angular.forEach(items, function(value, key) {
-            if ((key.indexOf(field) !== -1) || (value.indexOf(field) !== -1)) {
-                result[key] = value;
+        var result = [];
+        if (typeof items === 'object') {
+            for (var i = 0; i < items.length; ++i) {
+                if ((items[i].key + items[i].value).indexOf(field.query) !== -1) {
+                    if (!field.modified || $('input[name=' + items[i].key + ']').hasClass('ng-dirty')) {
+                        result.push(items[i]);
+                    }
+                }
             }
-        });
+        }
         return result;
     };
 });

@@ -1,12 +1,28 @@
 /* app css stylesheet */
 .container {
-	padding-top: 10px;
+    padding-top: 10px;
 }
 
 .navbar .nav {
-	width: 87%;
+    width: 87%;
+}
+.navbar .brand {
+    width: 10%;
+}
+.navbar .navbar-inner li a span {
+    padding-left: 10px;
 }
 
-.navbar .brand {
-	width: 10%;
+form input.ng-dirty {
+    background-color: yellow;
+}
+
+#settings-form th:nth-child(1), #settings-form td:nth-child(1) {
+    width: 10%;
+}
+#settings-form th:nth-child(2), #settings-form td:nth-child(2) {
+    width: 60%;
+}
+#settings-form th:nth-child(3), #settings-form td:nth-child(3) {
+    width: 30%;
 }

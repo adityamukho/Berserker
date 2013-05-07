@@ -3,11 +3,11 @@ var client;
 
 function connect(config) {
     client = restify.createJsonClient({
-        url: 'http://localhost:' + config.aria2c_opts['rpc-listen-port'],
+        url: 'http://localhost:' + config.aria2c['rpc-listen-port'],
         version: '*'
     });
-    if (config.aria2c_opts['rpc-user'] && config.aria2c_opts['rpc-passwd']) {
-        client.basicAuth(config.aria2c_opts['rpc-user'], config.aria2c_opts['rpc-passwd']);
+    if (config.aria2c['rpc-user'] && config.aria2c['rpc-passwd']) {
+        client.basicAuth(config.aria2c['rpc-user'], config.aria2c['rpc-passwd']);
     }
 }
 

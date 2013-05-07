@@ -33,7 +33,7 @@ client.on('connect', function(connection) {
 });
 
 function connect(config) {
-    client.connect('ws://localhost:' + config.aria2c_opts['rpc-listen-port'] + '/jsonrpc', 'echo-protocol',
+    client.connect('ws://localhost:' + config.aria2c['rpc-listen-port'] + '/jsonrpc', 'echo-protocol',
             'berserker', {'Sec-WebSocket-Protocol': 'http'});
 }
 
