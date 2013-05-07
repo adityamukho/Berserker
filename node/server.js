@@ -8,6 +8,7 @@ var restify = require('restify'),
 function init(config, conn) {
     //Start web server
     var server = restify.createServer();
+    server.use(restify.bodyParser({ mapParams: false }));
     //var io = socketio.listen(server);
 
     //io.sockets.on('connection', function(socket) {
@@ -22,10 +23,13 @@ function init(config, conn) {
     });
 
     //Routes
-    server.get('/command/:cmd', function command(req, res, next) {
+    server.post('/command/:cmd', function command(req, res, next) {
         var goptions = {
             method: req.params.cmd
         };
+        if (req.body) {
+            goptions.params = [req.body];
+        }
         conn.send(goptions, function(result) {
             if (result.err) {
                 next(err);

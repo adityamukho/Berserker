@@ -26,10 +26,16 @@ function DownloadListCtrl($scope, Command) {
 }
 DownloadListCtrl.$inject = ['$scope', 'Command'];
 
-function SettingsCtrl($scope, Command) {
-    var res = Command.get({command: 'aria2.getGlobalOption'}, function() {
+function SettingsCtrl($scope, $http) {
+    $http({
+        method: 'POST',
+        url: 'command/aria2.getGlobalOption',
+        headers: {
+            Accept: "application/json"
+        }
+    }).success(function(data, status) {
         $scope.master = [];
-        angular.forEach(res.result, function(value, key) {
+        angular.forEach(data.result, function(value, key) {
             $scope.master.push({
                 key: key,
                 value: value
@@ -50,11 +56,19 @@ function SettingsCtrl($scope, Command) {
                 changeset[$scope.settings[i].key] = $scope.settings[i].value;
             }
         }
-        Command.exec({
-            command: 'aria2.changeGlobalOption',
+        $http({
+            method: 'POST',
+            url: 'command/aria2.changeGlobalOption',
+            headers: {
+                Accept: "application/json"
+            },
             data: changeset
+        }).success(function(data, status) {
+            console.dir(data);
+        }).error(function(data, status) {
+            console.dir(data);
         });
-    }
+    };
 
     $scope.isUnchanged = function() {
         return angular.equals($scope.settings, $scope.master);
@@ -79,7 +93,7 @@ function SettingsCtrl($scope, Command) {
         setting.dirty = true;
     };
 }
-SettingsCtrl.$inject = ['$scope', 'Command'];
+SettingsCtrl.$inject = ['$scope', '$http'];
 
 /* Directives */
 angular.module('Berserker.directives', ['$strap.directives'])
@@ -94,7 +108,7 @@ angular.module('Berserker.directives', ['$strap.directives'])
 angular.module('Berserker.filters', []).filter('interpolate', ['version', function(version) {
         return function(text) {
             return String(text).replace(/\%VERSION\%/mg, version);
-        }
+        };
     }]).filter('settingsFilter', function() {
     return function(items, field) {
         var result = [];
@@ -112,14 +126,4 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
 });
 
 /* Services */
-angular.module('Berserker.services', ['ngResource']).value('version', '0.1')
-        .factory('Command', ['$resource', function($resource) {
-        return $resource('/command/:command', {command: ''}, {
-            exec: {
-                method: 'POST',
-                params: {
-                    data: ''
-                }
-            }
-        });
-    }]);
+angular.module('Berserker.services', []).value('version', '0.1');
