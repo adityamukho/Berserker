@@ -27,13 +27,7 @@ function DownloadListCtrl($scope, Command) {
 DownloadListCtrl.$inject = ['$scope', 'Command'];
 
 function SettingsCtrl($scope, $http) {
-    $http({
-        method: 'POST',
-        url: 'command/aria2.getGlobalOption',
-        headers: {
-            Accept: "application/json"
-        }
-    }).success(function(data, status) {
+    sendCommand($http, 'command/aria2.getGlobalOption').success(function(data, status) {
         $scope.master = [];
         angular.forEach(data.result, function(value, key) {
             $scope.master.push({
@@ -56,16 +50,7 @@ function SettingsCtrl($scope, $http) {
                 changeset[$scope.settings[i].key] = $scope.settings[i].value;
             }
         }
-        $http({
-            method: 'POST',
-            url: 'command/aria2.changeGlobalOption',
-            headers: {
-                Accept: "application/json"
-            },
-            data: changeset
-        }).success(function(data, status) {
-            console.dir(data);
-        }).error(function(data, status) {
+        sendCommand($http, 'command/aria2.changeGlobalOption').success(function(data, status) {
             console.dir(data);
         });
     };
@@ -127,3 +112,16 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
 
 /* Services */
 angular.module('Berserker.services', []).value('version', '0.1');
+
+/* Helper Functions */
+function sendCommand($http, url) {
+    return $http({
+        method: 'POST',
+        url: url,
+        headers: {
+            Accept: "application/json"
+        }
+    }).error(function(data, status) {
+        console.error('Error - Status: %s\n Message: %j', status, data);
+    });
+}
