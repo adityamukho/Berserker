@@ -32,7 +32,7 @@ function init(config, conn) {
         }
         conn.send(goptions, function(result) {
             if (result.err) {
-                next(err);
+                next(result.err);
                 return;
             }
 //            console.dir(result.obj);

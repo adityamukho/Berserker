@@ -21,22 +21,25 @@ angular.module('Berserker', ['Berserker.filters', 'Berserker.services', 'Berserk
             }]);
 
 /* Controllers */
-function DownloadListCtrl($scope, Command) {
-    $scope.downloads = Command.get({command: 'aria2.getGlobalOption'});
+function DownloadListCtrl($scope) {
+//    $scope.downloads = Command.get({command: 'aria2.getGlobalOption'});
 }
-DownloadListCtrl.$inject = ['$scope', 'Command'];
+DownloadListCtrl.$inject = ['$scope'];
 
 function SettingsCtrl($scope, $http) {
-    sendCommand($http, 'command/aria2.getGlobalOption').success(function(data, status) {
-        $scope.master = [];
-        angular.forEach(data.result, function(value, key) {
-            $scope.master.push({
-                key: key,
-                value: value
+    function init() {
+        sendCommand($http, 'command/aria2.getGlobalOption').success(function(data, status) {
+            $scope.master = [];
+            angular.forEach(data.result, function(value, key) {
+                $scope.master.push({
+                    key: key,
+                    value: value
+                });
             });
+            $scope.settings = angular.copy($scope.master);
         });
-        $scope.settings = angular.copy($scope.master);
-    });
+    }
+    init();
 
     $scope.filter = {
         query: '',
@@ -50,8 +53,10 @@ function SettingsCtrl($scope, $http) {
                 changeset[$scope.settings[i].key] = $scope.settings[i].value;
             }
         }
-        sendCommand($http, 'command/aria2.changeGlobalOption').success(function(data, status) {
-            console.dir(data);
+        sendCommand($http, 'command/aria2.changeGlobalOption', changeset).success(function(data, status) {
+            $scope.reset();
+            init();
+            $('#alerts').append(getAlertHtml('Settings saved.', 'alert-success'));
         });
     };
 
@@ -61,11 +66,13 @@ function SettingsCtrl($scope, $http) {
 
     $scope.reset = function() {
         $scope.settings = angular.copy($scope.master);
-        $scope.filter.query = '';
         if ($scope.filter.modified) {
             $('#mod').button('toggle');
-            $scope.filter.modified = false;
         }
+        $scope.filter = {
+            query: '',
+            modified: false
+        };
         $('ng-dirty').removeClass('ng-dirty').addClass('ng-pristine');
         $("html, body").animate({scrollTop: 0}, "slow");
     };
@@ -114,14 +121,22 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
 angular.module('Berserker.services', []).value('version', '0.1');
 
 /* Helper Functions */
-function sendCommand($http, url) {
+function sendCommand($http, url, data) {
     return $http({
         method: 'POST',
         url: url,
+        data: data,
         headers: {
             Accept: "application/json"
         }
     }).error(function(data, status) {
-        console.error('Error - Status: %s\n Message: %j', status, data);
+        $('#alerts').append(getAlertHtml('<strong>Error - Status: ' + status
+                + '</strong><br/>' + JSON.stringify(data), 'alert-error'));
     });
+}
+
+function getAlertHtml(message, type) {
+    return '<div class="alert alert-block ' + type
+            + '"><button type="button" class="close" data-dismiss="alert">&times;</button>' + message
+            + '</div>';
 }
