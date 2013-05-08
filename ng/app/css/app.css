@@ -27,3 +27,8 @@ form input.ng-dirty {
 button#mod {
     margin-left: 10px;
 }
+
+#copyright {
+    font-size: 12px;
+    margin-left: 10px;
+}
