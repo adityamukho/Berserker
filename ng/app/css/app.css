@@ -26,3 +26,7 @@ form input.ng-dirty {
 #settings-form th:nth-child(3), #settings-form td:nth-child(3) {
     width: 30%;
 }
+
+button#mod {
+    margin-left: 10px;
+}
