@@ -3,12 +3,6 @@
     padding-top: 10px;
 }
 
-.navbar .nav {
-    width: 87%;
-}
-.navbar .brand {
-    width: 10%;
-}
 .navbar .navbar-inner li a span {
     padding-left: 10px;
 }
@@ -17,6 +11,9 @@ form input.ng-dirty {
     background-color: yellow;
 }
 
+#settings-form {
+    min-height: 500px;
+}
 #settings-form th:nth-child(1), #settings-form td:nth-child(1) {
     width: 10%;
 }
