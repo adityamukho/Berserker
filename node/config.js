@@ -11,7 +11,7 @@ var config = {
         'max-connection-per-server': 4,
         'save-session': '/home/aditya/.aria2/session',
         'input-file': '/home/aditya/.aria2/session',
-        'rpc-listen-all': 'true'
+        'rpc-listen-all': 'false'
     },
     berserker: {
         aria2c_executable: 'aria2c',

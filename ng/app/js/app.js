@@ -58,6 +58,7 @@ function SettingsCtrl($scope, $http) {
             init();
             $('#alerts').append(getAlertHtml('Settings saved.', 'alert-success'));
         });
+        $("html, body").animate({scrollTop: 0}, "slow");
     };
 
     $scope.isUnchanged = function() {
@@ -121,22 +122,33 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
 angular.module('Berserker.services', []).value('version', '0.1');
 
 /* Helper Functions */
-function sendCommand($http, url, data) {
-    return $http({
+function sendCommand($http, url, data, errCallback) {
+    var result = $http({
         method: 'POST',
         url: url,
         data: data,
         headers: {
             Accept: "application/json"
         }
-    }).error(function(data, status) {
-        $('#alerts').append(getAlertHtml('<strong>Error - Status: ' + status
-                + '</strong><br/>' + JSON.stringify(data), 'alert-error'));
     });
+
+    if (typeof errCallback === 'function') {
+        result.error(errCallback);
+    }
+    else {
+        result.error(defaultErrHandler);
+    }
+
+    return result;
 }
 
 function getAlertHtml(message, type) {
     return '<div class="alert alert-block ' + type
             + '"><button type="button" class="close" data-dismiss="alert">&times;</button>' + message
             + '</div>';
+}
+
+function defaultErrHandler(data, status) {
+    $('#alerts').append(getAlertHtml('<strong>Error - Status: ' + status
+            + '</strong><br/>' + JSON.stringify(data), 'alert-error'));
 }
