@@ -24,6 +24,31 @@ function DownloadCtrl($scope, $http) {
         }
     ];
     $scope.tabs.activeTab = 0;
+
+    $scope.reset = function() {
+        $scope.uri = {
+            http: {
+                uri: ''
+            },
+            torrent: {},
+            metalink: {}
+        };
+        $('.uri-form .ng-dirty').removeClass('ng-dirty').addClass('ng-pristine');
+    };
+
+    $scope.addHttp = function() {
+        sendCommand($scope, $http, 'command/aria2.addUri', [$scope.uri.http.uri])
+                .success(function(data, status) {
+            $scope.reset();
+            $scope.$emit('ALERT', {
+                "type": "success",
+                "title": "Success",
+                "content": "URI Added."
+            });
+        });
+    };
+
+    $scope.reset();
 }
 DownloadCtrl.$inject = ['$scope', '$http'];
 
@@ -54,7 +79,8 @@ function SettingsCtrl($scope, $http) {
                 changeset[$scope.settings[i].key] = $scope.settings[i].value;
             }
         }
-        sendCommand($scope, $http, 'command/aria2.changeGlobalOption', changeset).success(function(data, status) {
+        sendCommand($scope, $http, 'command/aria2.changeGlobalOption', changeset).success(function(data,
+                status) {
             $scope.reset();
             init();
             $scope.$emit('ALERT', {

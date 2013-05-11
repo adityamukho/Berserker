@@ -34,10 +34,9 @@
     padding-left: 10px;
 }
 
-form input.ng-dirty {
+#settings-form input.ng-dirty {
     background-color: yellow;
 }
-
 #settings-form {
     min-height: 500px;
 }
@@ -83,4 +82,11 @@ button#mod {
 
 .box-title .controls .inline {
     margin-bottom: 0;
+}
+
+.form-horizontal .control-label {
+    width: 100px;
+}
+.form-horizontal .controls {
+margin-left: 120px;
 }
