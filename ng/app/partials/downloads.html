@@ -1,1 +1,66 @@
-{{stats}}
+<div class="mini-layout" id="status">
+    <div class="row">
+        <div class="box-title">
+            <div class="row">
+                <h4>Status</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row box-body">
+        <div class="span5">
+            <dl class="dl-horizontal">
+                <dt>Aria Version</dt>
+                <dd>
+                    {{version.version}}
+                </dd>
+                <dt>Enabled Features</dt>
+                <dd>
+                    <ul class="inline">
+                        <li data-ng-repeat="feature in version.enabledFeatures">
+                            "{{feature}}"
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+        <div class="span3">
+            <dl class="dl-horizontal">
+                <dt>Download Speed</dt>
+                <dd>{{stats.downloadSpeed}}</dd>
+                <dt>Upload Speed</dt>
+                <dd>{{stats.uploadSpeed}}</dd>
+            </dl>
+        </div>
+        <div class="span3">
+            <dl class="dl-horizontal">
+                <dt>Active</dt>
+                <dd>{{stats.numActive}}</dd>
+                <dt>Stopped</dt>
+                <dd>{{stats.numStopped}}</dd>
+                <dt>Waiting</dt>
+                <dd>{{stats.numWaiting}}</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="mini-layout">
+    <div class="row">
+        <div class="box-title">
+            <div class="row">
+                <h4 class="pull-left">Downloads</h4>
+                <div class="pull-right controls">
+                    <ul class="inline">
+                        <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addHttp.html'"><i class="icon-plus icon-white"></i> HTTP</button></li>
+                        <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addTorrent.html'"><i class="icon-plus icon-white"></i> Torrent</button></li>
+                        <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addMetalink.html'"><i class="icon-plus icon-white"></i> Metalink</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row box-body">
+        <div data-fade="1" data-ng-model="tabs.activeTab" data-bs-tabs class="span11">
+            <div data-ng-repeat="tab in tabs" data-title="{{tab.title}}"><p>{{tab.content}}</p></div>
+        </div>
+    </div>
+</div>

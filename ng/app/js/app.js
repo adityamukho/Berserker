@@ -2,7 +2,8 @@
 
 /* Modules */
 // Declare app level module which depends on filters, and services
-angular.module('Berserker', ['Berserker.filters', 'Berserker.services', 'Berserker.directives'])
+angular.module('Berserker', ['Berserker.filters', 'Berserker.services', 'Berserker.directives',
+    '$strap.directives'])
         .config(
         [
             '$routeProvider',
@@ -18,10 +19,16 @@ angular.module('Berserker', ['Berserker.filters', 'Berserker.services', 'Berserk
                 })
                         .otherwise({
                     redirectTo: '/downloads'});
-            }]);
+            }])
+        .run(function($rootScope) {
+    $rootScope.alerts = [];
+    $rootScope.$on('ALERT', function(event, alert) {
+        $rootScope.alerts.push(alert);
+    });
+});
 
 /* Directives */
-angular.module('Berserker.directives', ['$strap.directives'])
+angular.module('Berserker.directives', [])
         .directive('appVersion',
         ['version', function(version) {
                 return function(scope, elm, attrs) {
@@ -51,10 +58,10 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
 });
 
 /* Services */
-angular.module('Berserker.services', []).value('version', '0.1');
+angular.module('Berserker.services', []).value('version', '0.0.1');
 
 /* Helper Functions */
-function sendCommand($http, url, data, errCallback) {
+function sendCommand($scope, $http, url, data, errCallback) {
     var result = $http({
         method: 'POST',
         url: url,
@@ -68,19 +75,14 @@ function sendCommand($http, url, data, errCallback) {
         result.error(errCallback);
     }
     else {
-        result.error(defaultErrHandler);
+        result.error(function(data, status) {
+            $scope.$emit('ALERT', {
+                "type": "error",
+                "title": "Error",
+                "content": JSON.stringify(data)
+            });
+        });
     }
 
     return result;
-}
-
-function getAlertHtml(message, type) {
-    return '<div class="alert alert-block ' + type
-            + '"><button type="button" class="close" data-dismiss="alert">&times;</button>' + message
-            + '</div>';
-}
-
-function defaultErrHandler(data, status) {
-    $('#alerts').append(getAlertHtml('<strong>Error - Status: ' + status
-            + '</strong><br/>' + JSON.stringify(data), 'alert-error'));
 }
