@@ -26,19 +26,19 @@
         <div class="span3">
             <dl class="dl-horizontal">
                 <dt>Download Speed</dt>
-                <dd>{{stats.downloadSpeed}}</dd>
+                <dd>{{stats.downloadSpeed | bytes}}/s</dd>
                 <dt>Upload Speed</dt>
-                <dd>{{stats.uploadSpeed}}</dd>
+                <dd>{{stats.uploadSpeed | bytes}}/s</dd>
             </dl>
         </div>
         <div class="span3">
             <dl class="dl-horizontal">
                 <dt>Active</dt>
                 <dd>{{stats.numActive}}</dd>
-                <dt>Stopped</dt>
-                <dd>{{stats.numStopped}}</dd>
                 <dt>Waiting</dt>
                 <dd>{{stats.numWaiting}}</dd>
+                <dt>Stopped</dt>
+                <dd>{{stats.numStopped}}</dd>
             </dl>
         </div>
     </div>
@@ -50,7 +50,7 @@
                 <h4 class="pull-left">Downloads</h4>
                 <div class="pull-right controls">
                     <ul class="inline">
-                        <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addHttp.html'"><i class="icon-plus icon-white"></i> HTTP</button></li>
+                        <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addHttp.html'"><i class="icon-plus icon-white"></i> URL</button></li>
                         <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addTorrent.html'"><i class="icon-plus icon-white"></i> Torrent</button></li>
                         <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addMetalink.html'"><i class="icon-plus icon-white"></i> Metalink</button></li>
                     </ul>
@@ -60,7 +60,9 @@
     </div>
     <div class="row box-body">
         <div data-fade="1" data-ng-model="tabs.activeTab" data-bs-tabs class="span11">
-            <div data-ng-repeat="tab in tabs" data-title="{{tab.title}}"><p>{{tab.content}}</p></div>
+            <div data-ng-repeat="tab in tabs" data-title="{{tab.title}}">
+                <div data-compile="tab.content" class="download-list"></div>
+            </div>
         </div>
     </div>
 </div>

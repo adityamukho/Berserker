@@ -67,7 +67,7 @@ button#mod {
     cursor: pointer;
 }
 
-#status .box-body {
+#status .box-body, .download-list {
     font-size: 10px;
 }
 #status .box-body dl{

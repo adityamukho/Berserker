@@ -1,28 +1,59 @@
 'use strict';
 
 /* Controllers */
-function DownloadCtrl($scope, $http) {
-    sendCommand($scope, $http, 'command/aria2.getGlobalStat').success(function(data, status) {
-        $scope.stats = data.result;
-    });
-    sendCommand($scope, $http, 'command/aria2.getVersion').success(function(data, status) {
+function DownloadCtrl($scope, $http, $timeout) {
+    $scope.downloads = [];
+    
+    $scope.isActive = function(download) {
+        return download.status === 'active';
+    };
+    
+    function updateStatus() {
+        sendCommand($scope, $http, 'aria2.getGlobalStat', null, false).success(function(data, status) {
+            $scope.stats = data.result;
+        });
+
+        sendCommand($scope, $http, 'system.multicall', [
+            {methodName: 'aria2.tellActive'},
+            {methodName: 'aria2.tellWaiting', params: [0, 10]},
+            {methodName: 'aria2.tellStopped', params: [0, 10]}
+        ], false).success(function(data, status) {
+            $scope.downloads.length = 0;
+            for (var i = 0; i < data.result.length; ++i) {
+                $scope.downloads = $scope.downloads.concat(data.result[i][0]);
+            }
+        });
+
+        $timeout(updateStatus, 1000);
+    }
+    updateStatus();
+
+    sendCommand($scope, $http, 'aria2.getVersion', null, false).success(function(data, status) {
         $scope.version = data.result;
     });
 
-    $scope.tabs = [
-        {
-            "title": "HTTP",
-            "content": "Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica."
-        },
-        {
-            "title": "BitTorrent",
-            "content": "Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee."
-        },
-        {
-            "title": "Metalink",
-            "content": "Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade."
-        }
-    ];
+    $scope.tabs = [{"title": "HTTP"}, {"title": "BitTorrent"}, {"title": "Metalink"}];
+    $http({
+        method: 'GET',
+        url: 'partials/httpTab.html',
+        cache: true
+    }).success(function(data, status) {
+        $scope.tabs[0].content = data;
+    });
+    $http({
+        method: 'GET',
+        url: 'partials/torrentTab.html',
+        cache: true
+    }).success(function(data, status) {
+        $scope.tabs[1].content = data;
+    });
+    $http({
+        method: 'GET',
+        url: 'partials/metalinkTab.html',
+        cache: true
+    }).success(function(data, status) {
+        $scope.tabs[2].content = data;
+    });
     $scope.tabs.activeTab = 0;
 
     $scope.reset = function() {
@@ -37,24 +68,24 @@ function DownloadCtrl($scope, $http) {
     };
 
     $scope.addHttp = function() {
-        sendCommand($scope, $http, 'command/aria2.addUri', [$scope.uri.http.uri])
+        sendCommand($scope, $http, 'aria2.addUri', [$scope.uri.http.uri])
                 .success(function(data, status) {
-            $scope.reset();
             $scope.$emit('ALERT', {
                 "type": "success",
                 "title": "Success",
-                "content": "URI Added."
+                "content": "URI: <code>" + $scope.uri.http.uri + "</code> added."
             });
+            $scope.reset();
         });
     };
 
     $scope.reset();
 }
-DownloadCtrl.$inject = ['$scope', '$http'];
+DownloadCtrl.$inject = ['$scope', '$http', '$timeout'];
 
 function SettingsCtrl($scope, $http) {
     function init() {
-        sendCommand($scope, $http, 'command/aria2.getGlobalOption').success(function(data, status) {
+        sendCommand($scope, $http, 'aria2.getGlobalOption').success(function(data, status) {
             $scope.master = [];
             angular.forEach(data.result, function(value, key) {
                 $scope.master.push({
@@ -79,7 +110,7 @@ function SettingsCtrl($scope, $http) {
                 changeset[$scope.settings[i].key] = $scope.settings[i].value;
             }
         }
-        sendCommand($scope, $http, 'command/aria2.changeGlobalOption', changeset).success(function(data,
+        sendCommand($scope, $http, 'aria2.changeGlobalOption', changeset).success(function(data,
                 status) {
             $scope.reset();
             init();
@@ -93,13 +124,18 @@ function SettingsCtrl($scope, $http) {
     };
 
     $scope.reset = function() {
+        $scope.settings.length = 0;
         $scope.settings = angular.copy($scope.master);
         $scope.filter = {
             query: '',
             modified: false
         };
-        $('ng-dirty').removeClass('ng-dirty').addClass('ng-pristine');
         $("html, body").scrollTop(0);
+        $scope.$emit('ALERT', {
+            "type": "info",
+            "title": "Info",
+            "content": "The form has been reset."
+        });
     };
 
     $scope.markDirty = function(setting) {
