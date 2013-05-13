@@ -1,5 +1,14 @@
 var WebSocketClient = require('websocket').client;
 var client = new WebSocketClient();
+var conn, cbmap = {};
+
+function uuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+                v = (c === 'x') ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
 
 client.on('connectFailed', function(error) {
     console.error('Connect Error: ' + error.toString());
@@ -15,38 +24,33 @@ client.on('connect', function(connection) {
     });
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
-            console.log("Received: '" + message.utf8Data + "'");
+            var data = JSON.parse(message.utf8Data);
+            if (typeof cbmap[data.id] === 'function') {
+                cbmap[data.id]({obj: data});
+            }
+            else { //Message initiated by aria, hence no id
+                console.dir(data);
+            }
+            delete cbmap[data.id];
         }
     });
 
-    function getStatus() {
-        if (connection.connected) {
-            var goptions = {
-                method: 'aria2.getGlobalOption',
-                id: 'berserker',
-                jsonrpc: '2.0'
-            };
-            connection.sendUTF(JSON.stringify(goptions));
-        }
-    }
-    getStatus();
+    conn = connection;
 });
 
 function connect(config) {
-    client.connect('ws://localhost:' + config.aria2c['rpc-listen-port'] + '/jsonrpc', 'echo-protocol',
-            'berserker', {'Sec-WebSocket-Protocol': 'http'});
+    client.connect('ws://localhost:' + config.aria2c['rpc-listen-port'] + '/jsonrpc');
 }
 
 function send(command, callback) {
+    var id = uuid();
+    if (typeof callback === 'function') {
+        cbmap[id] = callback;
+    }
+
     command.jsonrpc = '2.0';
-    command.id = 'berserker';
-//    client.send(command);
-//    client.on('message', function(data) {
-//        console.dir(data);
-//        if (typeof callback === 'function') {
-//            callback(data);
-//        }
-//    });
+    command.id = id;
+    conn.sendUTF(JSON.stringify(command));
 }
 
 // Functions which will be available to external callers
