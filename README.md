@@ -11,6 +11,7 @@ The underlying transport layer will eventually use websockets exclusively. Check
 Install
 -------
 1. Install [Aria 2](http://aria2.sourceforge.net/) from the site or from your distribution's package repositories.
+2. Install [Node.js](http://nodejs.org/) from the site or from your distribution's package repositories.
 2. Run `$ npm install` from the project's root folder.
     
 Run
