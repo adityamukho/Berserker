@@ -22,9 +22,12 @@ function DownloadCtrl($scope, $http, $timeout) {
             $scope.downloads = $scope.downloads.concat(data.result[0][0], data.result[1][0], data.result[2][0]);
         });
 
-        $timeout(updateStatus, 1000);
+        $scope.cronid = $timeout(updateStatus, 1000);
     }
     updateStatus();
+    $scope.$on('$destroy', function(){
+        $timeout.cancel($scope.cronid);
+    });
 
     sendCommand($scope, $http, 'aria2.getVersion', null, false).success(function(data, status) {
         $scope.version = data.result;
