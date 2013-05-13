@@ -132,7 +132,7 @@ function SettingsCtrl($scope, $http) {
         }
         sendCommand($scope, $http, 'aria2.changeGlobalOption', changeset).success(function(data,
                 status) {
-            $scope.reset();
+            $scope.reset(true);
             init();
             $scope.$emit('ALERT', {
                 "type": "success",
@@ -143,18 +143,20 @@ function SettingsCtrl($scope, $http) {
         $("html, body").scrollTop(0);
     };
 
-    $scope.reset = function() {
+    $scope.reset = function(noalert) {
         $scope.settings = angular.copy($scope.master);
         $scope.filter = {
             query: '',
             modified: false
         };
         $("html, body").scrollTop(0);
-        $scope.$emit('ALERT', {
-            "type": "info",
-            "title": "Info",
-            "content": "The form has been reset."
-        });
+        if (!noalert) {
+            $scope.$emit('ALERT', {
+                "type": "info",
+                "title": "Info",
+                "content": "The form has been reset."
+            });
+        }
     };
 
     $scope.markDirty = function(setting) {
