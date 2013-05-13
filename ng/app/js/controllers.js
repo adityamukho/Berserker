@@ -3,6 +3,11 @@
 /* Controllers */
 function DownloadCtrl($scope, $http, $timeout) {
     $scope.downloads = [];
+    $scope.switches = {
+        active: true,
+        waiting: false,
+        stopped: false
+    };
 
     $scope.hex2bin = function(n) {
         function checkHex(n) {
@@ -29,17 +34,29 @@ function DownloadCtrl($scope, $http, $timeout) {
             $scope.stats = data.result;
         });
 
-        sendCommand($scope, $http, 'system.multicall', [
-            {methodName: 'aria2.tellActive'},
-            {methodName: 'aria2.tellWaiting', params: [0, 10]},
-            {methodName: 'aria2.tellStopped', params: [0, 10]}
-        ], false).success(function(data, status) {
+        var dlparams = [];
+        if ($scope.switches.active) {
+            dlparams.push({methodName: 'aria2.tellActive'});
+        }
+        if ($scope.switches.waiting) {
+            dlparams.push({methodName: 'aria2.tellWaiting', params: [0, 10]});
+        }
+        if ($scope.switches.stopped) {
+            dlparams.push({methodName: 'aria2.tellStopped', params: [0, 10]});
+        }
+
+        if (dlparams.length) {
+            sendCommand($scope, $http, 'system.multicall', dlparams, false).success(function(data, status) {
+                $scope.downloads.length = 0;
+                for (var i = 0; i < data.result.length; ++i) {
+                    for (var j = 0; j < data.result[i][0].length; ++j)
+                        $scope.downloads.push(data.result[i][0][j]);
+                }
+            });
+        }
+        else {
             $scope.downloads.length = 0;
-            for (var i = 0; i < data.result.length; ++i) {
-                for (var j = 0; j < data.result[i][0].length; ++j)
-                    $scope.downloads.push(data.result[i][0][j]);
-            }
-        });
+        }
 
         $scope.cronid = $timeout(updateStatus, 1000);
         return 'DownloadCtrl.updateStatus'; //cronid

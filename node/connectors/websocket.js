@@ -1,6 +1,7 @@
 var WebSocketClient = require('websocket').client;
-var client = new WebSocketClient();
-var conn, cbmap = {};
+var client = new WebSocketClient(),
+        conn,
+        cbmap = {};
 
 function uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -11,16 +12,16 @@ function uuid() {
 }
 
 client.on('connectFailed', function(error) {
-    console.error('Connect Error: ' + error.toString());
+    console.error('Client Error: ' + error.toString());
 });
 
 client.on('connect', function(connection) {
-    console.log('WebSocket client connected');
+    console.log('WebSocket client connected to Aria 2.');
     connection.on('error', function(error) {
         console.error("Connection Error: " + error.toString());
     });
     connection.on('close', function() {
-        console.log('echo-protocol Connection Closed');
+        console.log('Connection Closed');
     });
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
