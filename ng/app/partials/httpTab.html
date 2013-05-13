@@ -31,9 +31,13 @@
                     <dd>{{download.status}}</dd>
                     <dt>Download Speed</dt>
                     <dd>{{download.downloadSpeed | bytes}}/s</dd>
+                    <dt>Completed</dt>
+                    <dd>{{percentComplete(download)}}%</dd>
+                    <dt>Bitfield</dt>
+                    <dd>{{download.bitfield}}</dd>
                 </dl>
                 <div class="progress progress-striped" data-ng-show="isActive(download)">
-                    <div class="bar" style="width: {{download.files[0].completedLength / download.files[0].length * 100}}%;"></div>
+                    <div class="bar" style="width: {{percentComplete(download)}}%;"></div>
                 </div>
             </td>
         </tr>

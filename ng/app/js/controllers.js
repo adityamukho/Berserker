@@ -4,9 +4,25 @@
 function DownloadCtrl($scope, $http, $timeout) {
     $scope.downloads = [];
 
+    $scope.hex2bin = function(n) {
+        function checkHex(n) {
+            return/^[0-9A-Fa-f]{1,64}$/.test(n);
+        }
+        if (!checkHex(n)) return 0;
+        return parseInt(n, 16).toString(2)
+    };
+
     $scope.isActive = function(download) {
         return download.status === 'active';
     };
+
+    $scope.percentComplete = function(download) {
+        if (download.pc) {
+            return download.pc;
+        }
+        download.pc = (100 * download.files[0].completedLength / download.files[0].length).toFixed(1);
+        return download.pc;
+    }
 
     function updateStatus() {
         sendCommand($scope, $http, 'aria2.getGlobalStat', null, false).success(function(data, status) {
@@ -26,6 +42,7 @@ function DownloadCtrl($scope, $http, $timeout) {
         });
 
         $scope.cronid = $timeout(updateStatus, 1000);
+        return 'DownloadCtrl.updateStatus'; //cronid
     }
     updateStatus();
     $scope.$on('$destroy', function() {
