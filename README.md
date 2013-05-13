@@ -4,9 +4,10 @@ Web-based frontend for Aria2-JSONRPC
 
 VERY VERY W.I.P.
 
-Install Dependencies Locally
-----------------------------
-    $ npm install
+Install
+-------
+1. Install [Aria 2](http://aria2.sourceforge.net/) from the site or from your distribution's package repositories.
+2. `$ npm install`
     
 Run
 ---
