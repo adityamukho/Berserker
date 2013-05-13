@@ -29,7 +29,7 @@ client.on('connect', function(connection) {
             if (typeof cbmap[data.id] === 'function') {
                 var result = {
                     obj: data,
-                    err: new Error(data.error.message)
+                    err: data.error ? new Error(data.error.message) : false
                 };
                 cbmap[data.id](result);
             }
