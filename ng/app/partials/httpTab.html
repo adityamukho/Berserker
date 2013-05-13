@@ -38,8 +38,8 @@
                 <dl class="dl-horizontal">
                     <dt>Status</dt>
                     <dd>{{download.status}}</dd>
-                    <dt>Download Speed</dt>
-                    <dd>{{download.downloadSpeed | bytes}}/s</dd>
+                    <dt data-ng-show="download.downloadSpeed">Download Speed</dt>
+                    <dd data-ng-show="download.downloadSpeed">{{download.downloadSpeed | bytes}}/s</dd>
                     <dt>Completed</dt>
                     <dd>{{percentComplete(download)}}%</dd>
 <!--                    <dt>Bitfield</dt>
