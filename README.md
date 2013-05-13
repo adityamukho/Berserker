@@ -10,5 +10,6 @@ Installation
     
 Run
 ---
-    $ node node/Berserker.js
-Open [http://localhost:8000/]
+1. Edit `node/config.js`.
+1. `$ node node/Berserker.js`
+1. Open [http://localhost:8000/](http://localhost:8000/) (Or whatever port you have set in `node/config.js`).
