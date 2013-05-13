@@ -4,8 +4,8 @@ Web-based frontend for Aria2-JSONRPC
 
 VERY VERY W.I.P.
 
-Installation
-------------
+Install Dependencies Locally
+----------------------------
     $ npm install
     
 Run
