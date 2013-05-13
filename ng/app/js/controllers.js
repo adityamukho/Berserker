@@ -3,11 +3,11 @@
 /* Controllers */
 function DownloadCtrl($scope, $http, $timeout) {
     $scope.downloads = [];
-    
+
     $scope.isActive = function(download) {
         return download.status === 'active';
     };
-    
+
     function updateStatus() {
         sendCommand($scope, $http, 'aria2.getGlobalStat', null, false).success(function(data, status) {
             $scope.stats = data.result;
@@ -19,13 +19,16 @@ function DownloadCtrl($scope, $http, $timeout) {
             {methodName: 'aria2.tellStopped', params: [0, 10]}
         ], false).success(function(data, status) {
             $scope.downloads.length = 0;
-            $scope.downloads = $scope.downloads.concat(data.result[0][0], data.result[1][0], data.result[2][0]);
+            for (var i = 0; i < data.result.length; ++i) {
+                for (var j = 0; j < data.result[i][0].length; ++j)
+                    $scope.downloads.push(data.result[i][0][j]);
+            }
         });
 
         $scope.cronid = $timeout(updateStatus, 1000);
     }
     updateStatus();
-    $scope.$on('$destroy', function(){
+    $scope.$on('$destroy', function() {
         $timeout.cancel($scope.cronid);
     });
 
@@ -33,28 +36,10 @@ function DownloadCtrl($scope, $http, $timeout) {
         $scope.version = data.result;
     });
 
-    $scope.tabs = [{"title": "HTTP"}, {"title": "BitTorrent"}, {"title": "Metalink"}];
-    $http({
-        method: 'GET',
-        url: 'partials/httpTab.html',
-        cache: true
-    }).success(function(data, status) {
-        $scope.tabs[0].content = data;
-    });
-    $http({
-        method: 'GET',
-        url: 'partials/torrentTab.html',
-        cache: true
-    }).success(function(data, status) {
-        $scope.tabs[1].content = data;
-    });
-    $http({
-        method: 'GET',
-        url: 'partials/metalinkTab.html',
-        cache: true
-    }).success(function(data, status) {
-        $scope.tabs[2].content = data;
-    });
+    $scope.tabs = [
+        {title: "HTTP", content: 'partials/httpTab.html'},
+        {title: "BitTorrent", content: 'partials/torrentTab.html'},
+        {title: "Metalink", content: 'partials/metalinkTab.html'}];
     $scope.tabs.activeTab = 0;
 
     $scope.reset = function() {

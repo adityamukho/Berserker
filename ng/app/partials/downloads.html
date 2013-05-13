@@ -61,7 +61,7 @@
     <div class="row box-body">
         <div data-fade="1" data-ng-model="tabs.activeTab" data-bs-tabs class="span11">
             <div data-ng-repeat="tab in tabs" data-title="{{tab.title}}">
-                <div data-compile="tab.content" class="download-list"></div>
+                <div data-ng-include="tab.content" class="download-list"></div>
             </div>
         </div>
     </div>
