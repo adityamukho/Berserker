@@ -27,7 +27,11 @@ client.on('connect', function(connection) {
         if (message.type === 'utf8') {
             var data = JSON.parse(message.utf8Data);
             if (typeof cbmap[data.id] === 'function') {
-                cbmap[data.id]({obj: data});
+                var result = {
+                    obj: data,
+                    err: new Error(data.error.message)
+                };
+                cbmap[data.id](result);
             }
             else { //Message initiated by aria, hence no id
                 console.dir(data);
