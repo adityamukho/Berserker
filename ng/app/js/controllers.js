@@ -19,9 +19,7 @@ function DownloadCtrl($scope, $http, $timeout) {
             {methodName: 'aria2.tellStopped', params: [0, 10]}
         ], false).success(function(data, status) {
             $scope.downloads.length = 0;
-            for (var i = 0; i < data.result.length; ++i) {
-                $scope.downloads = $scope.downloads.concat(data.result[i][0]);
-            }
+            $scope.downloads = $scope.downloads.concat(data.result[0][0], data.result[1][0], data.result[2][0]);
         });
 
         $timeout(updateStatus, 1000);
@@ -124,7 +122,6 @@ function SettingsCtrl($scope, $http) {
     };
 
     $scope.reset = function() {
-        $scope.settings.length = 0;
         $scope.settings = angular.copy($scope.master);
         $scope.filter = {
             query: '',
