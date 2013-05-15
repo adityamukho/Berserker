@@ -3,7 +3,7 @@
         <div class="input-prepend">
             <span class="add-on"><i class="icon-search"></i></span>
             <input type="text" data-ng-model="filter.query" placeholder="Search"/>
-            <button type="button" class="btn" data-toggle="button" data-ng-click="toggleModified()" id="mod">Show Modified Only</button>
+            <button type="button" class="btn" data-ng-model="filter.modified" data-bs-button><i class="icon-filter"></i> Show Modified Only</button>
         </div>
     </div>
 </div>
@@ -24,6 +24,6 @@
             </tr>
         </tbody>
     </table>
-    <button data-ng-click="update()" data-ng-disabled="isUnchanged()" class="btn btn-primary">Save</button>
-    <button data-ng-click="reset()" data-ng-disabled="isUnchanged()" class="btn btn-inverse">Reset Form</button>
+    <button data-ng-click="update()" class="btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
+    <button data-ng-click="reset()" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Reset Form</button>
 </form>

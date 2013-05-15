@@ -1,3 +1,4 @@
 /.nbrun
 nbproject
 node_modules
+/node/package.json

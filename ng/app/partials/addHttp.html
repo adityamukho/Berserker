@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4>Add HTTP(s)/FTP/Magnet URL</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal uri-form" name="httpForm">
+        <div class="control-group">
+            <label class="control-label" for="uri">URL</label>
+            <div class="controls">
+                <input type="url" id="text" name="uri" required data-ng-model="uri.http.uri" placeholder="URL" class="span3">
+                <span class="error" data-ng-show="httpForm.uri.$error.required">[Required]</span>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" data-ng-disabled="!httpForm.$valid" data-ng-click="addHttp();hide()"><i class="icon-ok icon-white"></i> Add</button>
+    <button type="button" class="btn btn-inverse" data-ng-click="hide()"><i class="icon-remove icon-white"></i> Cancel</button>
+</div>
