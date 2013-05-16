@@ -5,7 +5,7 @@ function DownloadCtrl($scope, $http, $timeout) {
     $scope.downloads = [];
     $scope.switches = {
         active: true,
-        waiting: true,
+        waiting: false,
         stopped: false
     };
     $scope.dc = [];
@@ -34,6 +34,16 @@ function DownloadCtrl($scope, $http, $timeout) {
         }
     };
 
+    $scope.alterConfirm = function(download) {
+        var func = this;
+        var args = arguments;
+        bootbox.confirm('Are you sure?', function(result) {
+            if (result) {
+                $scope.alter.apply(func, args);
+            }
+        });
+    };
+
     $scope.move = function(download, direction) {
         sendCommand($scope, $http, 'aria2.changePosition', [download.gid, direction, 'POS_CUR']);
     };
@@ -53,9 +63,9 @@ function DownloadCtrl($scope, $http, $timeout) {
     $scope.toggleCollapse = function(index) {
         $scope.dc[index] = !$scope.dc[index];
     }
-    
+
     $scope.getText = function(index) {
-        return $scope.dc[index] ? 'Hide' : 'Show'; 
+        return $scope.dc[index] ? 'Hide' : 'Show';
     }
 
     function updateStatus() {
