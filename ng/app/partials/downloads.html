@@ -94,12 +94,9 @@
                                 <dd data-ng-show="download.downloadSpeed">{{download.downloadSpeed | bytes}}/s</dd>
                                 <dt data-ng-show="download.uploadSpeed">Upload Speed</dt>
                                 <dd data-ng-show="download.uploadSpeed">{{download.uploadSpeed | bytes}}/s</dd>
-                                <dt>Completed</dt>
-                                <dd>{{percentComplete(download)}}%</dd>
-                                <!--                    <dt>Bitfield</dt>
-                                                    <dd>{{download.bitfield}}</dd>-->
                             </dl>
-                            <div class="progress progress-striped" data-ng-show="isActive(download)">
+                            <span class="badge percent-complete pull-left">{{percentComplete(download)}}%</span>
+                            <div class="progress progress-striped">
                                 <div class="bar" style="width: {{percentComplete(download)}}%;"></div>
                             </div>
                         </td>

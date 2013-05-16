@@ -110,3 +110,9 @@ button#mod {
 .dl-horizontal dd {
     margin-left: 120px;
 }
+
+span.percent-complete {
+    padding: 4px;
+    text-align: center;
+    margin-right: 5px;
+}
