@@ -67,13 +67,18 @@ button#mod {
     cursor: pointer;
 }
 
-#status .box-body, .download-list {
-    font-size: 10px;
+#status .box-body, #download-list {
+    margin-top: 20px;
 }
 #status .box-body dl,
-.download-list dl{
+#download-list dl{
     margin-bottom: 0;
 }
+#status .box-body,
+#downloads .box-body {
+    font-size: 10px;
+}
+
 
 .box-title .controls {
     margin-top: 5px;
@@ -89,5 +94,19 @@ button#mod {
     width: 100px;
 }
 .form-horizontal .controls {
+    margin-left: 120px;
+}
+
+#download-list th:nth-child(1), #download-list td:nth-child(1) {
+    width: 20%;
+}
+#download-list th:nth-child(2), #download-list td:nth-child(2) {
+    width: 80%;
+}
+
+.dl-horizontal dt {
+    width: 100px;
+}
+.dl-horizontal dd {
     margin-left: 120px;
 }

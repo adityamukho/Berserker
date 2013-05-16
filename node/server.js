@@ -8,7 +8,7 @@ var restify = require('restify'),
 function init(config, conn) {
     //Start web server
     var server = restify.createServer();
-    server.use(restify.bodyParser({ mapParams: false }));
+    server.use(restify.bodyParser({mapParams: false}));
     //var io = socketio.listen(server);
 
     //io.sockets.on('connection', function(socket) {
@@ -28,6 +28,9 @@ function init(config, conn) {
             method: req.params.cmd
         };
         if (req.body) {
+            if (req.params.cmd === 'aria2.remove') {
+                console.dir(req.body);
+            }
             goptions.params = [req.body];
         }
         conn.send(goptions, function(result) {
@@ -46,7 +49,8 @@ function init(config, conn) {
     //IMP: This is a catch-all route. Must be placed last.
     server.get(/(.*)/, function sendFile(req, res, next) {
 //        console.dir(req.params);
-        var filename = (req.params[0] === '/') ? __dirname + '/../ng/app/index.html' : __dirname + '/../ng/app/'
+        var filename = (req.params[0] === '/') ? __dirname + '/../ng/app/index.html' : __dirname
+                + '/../ng/app/'
                 + req.params[0];
         fs.readFile(filename, function(err, data) {
             if (err) {

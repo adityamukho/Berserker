@@ -5,9 +5,10 @@ function DownloadCtrl($scope, $http, $timeout) {
     $scope.downloads = [];
     $scope.switches = {
         active: true,
-        waiting: false,
+        waiting: true,
         stopped: false
     };
+    $scope.dc = [];
 
     $scope.hex2bin = function(n) {
         function checkHex(n) {
@@ -20,13 +21,41 @@ function DownloadCtrl($scope, $http, $timeout) {
     $scope.isActive = function(download) {
         return download.status === 'active';
     };
+    $scope.isWaiting = function(download) {
+        return download.status === 'paused';
+    };
+    $scope.isStopped = function(download) {
+        return (!$scope.isWaiting(download) && !$scope.isActive(download));
+    };
+
+    $scope.alter = function(download) {
+        for (var i = 1; i < arguments.length; ++i) {
+            sendCommand($scope, $http, 'aria2.' + arguments[i], '\"' + download.gid + '\"', false);
+        }
+    };
+
+    $scope.move = function(download, direction) {
+        sendCommand($scope, $http, 'aria2.changePosition', [download.gid, direction, 'POS_CUR']);
+    };
+
+    $scope.filename = function(path) {
+        return path.replace(/^.*[\\\/]/, '');
+    }
 
     $scope.percentComplete = function(download) {
         if (download.pc) {
             return download.pc;
         }
-        download.pc = (100 * download.files[0].completedLength / download.files[0].length).toFixed(1);
+        download.pc = (100 * download.completedLength / download.totalLength).toFixed(1);
         return download.pc;
+    }
+
+    $scope.toggleCollapse = function(index) {
+        $scope.dc[index] = !$scope.dc[index];
+    }
+    
+    $scope.getText = function(index) {
+        return $scope.dc[index] ? 'Hide' : 'Show'; 
     }
 
     function updateStatus() {
@@ -51,6 +80,7 @@ function DownloadCtrl($scope, $http, $timeout) {
                 for (var i = 0; i < data.result.length; ++i) {
                     for (var j = 0; j < data.result[i][0].length; ++j)
                         $scope.downloads.push(data.result[i][0][j]);
+                    $scope.dc.push(false);
                 }
             });
         }

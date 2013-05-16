@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="row box-body">
-        <div class="span5">
+        <div class="span6">
             <dl class="dl-horizontal">
                 <dt>Aria Version</dt>
                 <dd>
@@ -31,7 +31,7 @@
                 <dd>{{stats.uploadSpeed | bytes}}/s</dd>
             </dl>
         </div>
-        <div class="span3">
+        <div class="span2">
             <dl class="dl-horizontal">
                 <dt>Active</dt>
                 <dd>{{stats.numActive}}</dd>
@@ -43,7 +43,7 @@
         </div>
     </div>
 </div>
-<div class="mini-layout">
+<div class="mini-layout" id="downloads">
     <div class="row">
         <div class="box-title">
             <div class="row">
@@ -59,10 +59,79 @@
         </div>
     </div>
     <div class="row box-body">
-        <div data-fade="1" data-ng-model="tabs.activeTab" data-bs-tabs class="span11">
-            <div data-ng-repeat="tab in tabs" data-title="{{tab.title}}">
-                <div data-ng-include="tab.content" class="download-list"></div>
+        <div class="span11" id="download-list">
+            <div class="control-group">
+                <div class="controls">
+                    <div class="btn-group" data-bs-buttons-checkbox>
+                        <button type="button" class="btn btn-mini" data-ng-model="switches.active"><i class="icon-play"></i> Active</button>
+                        <button type="button" class="btn btn-mini" data-ng-model="switches.waiting"><i class="icon-pause"></i> Waiting</button>
+                        <button type="button" class="btn btn-mini" data-ng-model="switches.stopped"><i class="icon-stop"></i>Stopped</button>
+                    </div>
+                </div>
             </div>
+            <table class="table table-hover table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="download in downloads">
+                        <td>
+                            <ul class="inline">
+                                <li><strong>{{$index + 1}}</strong></li>
+                                <li><a class='btn btn-mini' href="" data-ng-click="move(download, 1)"><i class="icon-arrow-down"></i></a></li>
+                                <li><a class='btn btn-mini' href="" data-ng-click="move(download, -1)"><i class="icon-arrow-up"></i></a></li>
+                                <li><a class='btn btn-mini' href="" data-ng-show="isActive(download)" data-ng-click="alter(download, 'pause')"><i class="icon-pause"></i></a></li>
+                                <li><a class='btn btn-mini' href="" data-ng-show="isWaiting(download)"  data-ng-click="alter(download, 'unpause')"><i class="icon-play"></i></a></li>
+                                <li><a class='btn btn-mini' href="" data-ng-click="alter(download, 'remove', 'removeDownloadResult')"><i class="icon-trash"></i></a></li>
+                            </ul>
+                            <dl class="dl-horizontal">
+                                <dt>Status</dt>
+                                <dd>{{download.status}}</dd>
+                                <dt data-ng-show="download.downloadSpeed">Download Speed</dt>
+                                <dd data-ng-show="download.downloadSpeed">{{download.downloadSpeed | bytes}}/s</dd>
+                                <dt data-ng-show="download.uploadSpeed">Upload Speed</dt>
+                                <dd data-ng-show="download.uploadSpeed">{{download.uploadSpeed | bytes}}/s</dd>
+                                <dt>Completed</dt>
+                                <dd>{{percentComplete(download)}}%</dd>
+                                <!--                    <dt>Bitfield</dt>
+                                                    <dd>{{download.bitfield}}</dd>-->
+                            </dl>
+                            <div class="progress progress-striped" data-ng-show="isActive(download)">
+                                <div class="bar" style="width: {{percentComplete(download)}}%;"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <dl class="dl-horizontal">
+                                <dt>Size</dt>
+                                <dd>{{download.totalLength | bytes}}</dd>
+                                <dt>Completed</dt>
+                                <dd>{{download.completedLength | bytes}}</dd>
+                                <dt data-ng-show="download.dir">Destination</dt>
+                                <dd data-ng-show="download.dir">{{download.dir}}</dd>
+                                <dt>File(s)</dt>
+                                <dd>
+                                    <a href="" data-ng-click="toggleCollapse($index)">{{getText($index)}}</a>
+                                    <ol id="files" data-ng-class="{collapse: true, in: dc[$index]}">
+                                        <li data-ng-repeat="file in download.files">{{filename(file.path)}}</li>
+                                    </ol>
+                                </dd>
+                                <dt data-ng-hide="download.infoHash">URIs</dt>
+                                <dd data-ng-hide="download.infoHash">
+                                    <ul class="unstyled">
+                                        <li data-ng-repeat="uri in download.files[0].uris | unique: 'uri'">{{uri.uri}}</li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </td>
+                    </tr>
+                    <tr data-ng-hide="downloads.length">
+                        <td colspan="2">No downloads</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
