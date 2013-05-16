@@ -3,6 +3,7 @@
 /* Controllers */
 function DownloadCtrl($scope, $http, $timeout) {
     $scope.downloads = [];
+    $scope.interval = 1;
     $scope.switches = {
         active: true,
         waiting: false,
@@ -98,7 +99,7 @@ function DownloadCtrl($scope, $http, $timeout) {
             $scope.downloads.length = 0;
         }
 
-        $scope.cronid = $timeout(updateStatus, 1000);
+        $scope.cronid = $timeout(updateStatus, 1000 * $scope.interval);
         return 'DownloadCtrl.updateStatus'; //cronid
     }
     updateStatus();
@@ -140,6 +141,9 @@ function DownloadCtrl($scope, $http, $timeout) {
     };
 
     $scope.reset();
+    $('#update-slider').slider('setValue', $scope.interval).on('slide', function(ev) {
+        $scope.interval = ev.value;
+    });
 }
 DownloadCtrl.$inject = ['$scope', '$http', '$timeout'];
 

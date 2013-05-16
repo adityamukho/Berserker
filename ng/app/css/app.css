@@ -116,3 +116,7 @@ span.percent-complete {
     text-align: center;
     margin-right: 5px;
 }
+
+.slider {
+    margin-left: 10px;
+}

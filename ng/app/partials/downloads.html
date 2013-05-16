@@ -67,6 +67,10 @@
                         <button type="button" class="btn btn-mini" data-ng-model="switches.waiting"><i class="icon-pause"></i> Waiting</button>
                         <button type="button" class="btn btn-mini" data-ng-model="switches.stopped"><i class="icon-stop"></i>Stopped</button>
                     </div>
+                    <div class="pull-right">
+                        <strong>Update Interval (s)</strong>
+                        <input type="text" class="slider span2" id="update-slider" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-selection="after" data-slider-tooltip="show">
+                    </div>
                 </div>
             </div>
             <table class="table table-hover table-bordered table-condensed">
