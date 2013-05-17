@@ -20,5 +20,5 @@ Run
 
 Notes
 -----
-1. Your Aria2 executable must have support compiled for the aria2.multicall function. 
+1. Your Aria2 executable must have support compiled for the *aria2.multicall* function. 
 1. If aria was not built with websocket support, use the restify or http connector instead (See config.js).
