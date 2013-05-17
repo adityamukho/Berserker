@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="row box-body">
-        <div class="span6">
+        <div class="span8">
             <dl class="dl-horizontal">
                 <dt>Aria Version</dt>
                 <dd>
@@ -29,16 +29,6 @@
                 <dd>{{stats.downloadSpeed | bytes}}/s</dd>
                 <dt>Upload Speed</dt>
                 <dd>{{stats.uploadSpeed | bytes}}/s</dd>
-            </dl>
-        </div>
-        <div class="span2">
-            <dl class="dl-horizontal">
-                <dt>Active</dt>
-                <dd>{{stats.numActive}}</dd>
-                <dt>Waiting</dt>
-                <dd>{{stats.numWaiting}}</dd>
-                <dt>Stopped</dt>
-                <dd>{{stats.numStopped}}</dd>
             </dl>
         </div>
     </div>
@@ -63,12 +53,12 @@
             <div class="control-group">
                 <div class="controls">
                     <div class="btn-group" data-bs-buttons-checkbox>
-                        <button type="button" class="btn btn-mini" data-ng-model="switches.active"><i class="icon-play"></i> Active</button>
-                        <button type="button" class="btn btn-mini" data-ng-model="switches.waiting"><i class="icon-pause"></i> Waiting</button>
-                        <button type="button" class="btn btn-mini" data-ng-model="switches.stopped"><i class="icon-stop"></i>Stopped</button>
+                        <button type="button" class="btn btn-mini" data-ng-model="switches.active"><i class="icon-play"></i> Active ({{stats.numActive}})</button>
+                        <button type="button" class="btn btn-mini" data-ng-model="switches.waiting"><i class="icon-pause"></i> Paused ({{stats.numWaiting}})</button>
+                        <button type="button" class="btn btn-mini" data-ng-model="switches.stopped"><i class="icon-stop"></i> Stopped ({{stats.numStopped}})</button>
                     </div>
                     <div class="pull-right">
-                        <strong>Update Interval (s)</strong>
+                        <strong>Refresh Interval ({{interval}}s)</strong>
                         <input type="text" class="slider span2" id="update-slider" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-selection="after" data-slider-tooltip="show">
                     </div>
                 </div>
