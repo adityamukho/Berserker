@@ -28,13 +28,7 @@ function init(config, conn) {
             method: req.params.cmd
         };
         if (req.body) {
-            //<debug>
-            if (req.params.cmd === 'aria2.changePosition') {
-                console.dir(req.body);
-                goptions.params = req.body;
-            }
-            //</debug>
-            else goptions.params = [req.body];
+            goptions.params = req.body;
         }
         conn.send(goptions, function(result) {
             if (result.err) {

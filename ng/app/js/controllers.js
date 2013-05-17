@@ -31,7 +31,7 @@ function DownloadCtrl($scope, $http, $timeout) {
 
     $scope.alter = function(download) {
         for (var i = 1; i < arguments.length; ++i) {
-            sendCommand($scope, $http, 'aria2.' + arguments[i], '\"' + download.gid + '\"', false);
+            sendCommand($scope, $http, 'aria2.' + arguments[i], [download.gid], false);
         }
     };
 
@@ -46,7 +46,13 @@ function DownloadCtrl($scope, $http, $timeout) {
     };
 
     $scope.move = function(download, direction) {
-        sendCommand($scope, $http, 'aria2.changePosition', [download.gid, direction, 'POS_CUR']);
+        sendCommand($scope, $http, 'aria2.changePosition', [download.gid, direction, 'POS_CUR'], function (data, status) {
+            $scope.$emit('ALERT', {
+                "type": "",
+                "title": "Notice",
+                "content": "This entry cannot be moved in its current state."
+            });
+        });
     };
 
     $scope.filename = function(path) {
@@ -86,7 +92,7 @@ function DownloadCtrl($scope, $http, $timeout) {
         }
 
         if (dlparams.length) {
-            sendCommand($scope, $http, 'system.multicall', dlparams, false).success(function(data, status) {
+            sendCommand($scope, $http, 'system.multicall', [dlparams], false).success(function(data, status) {
                 $scope.downloads.length = 0;
                 for (var i = 0; i < data.result.length; ++i) {
                     for (var j = 0; j < data.result[i][0].length; ++j)
@@ -129,7 +135,7 @@ function DownloadCtrl($scope, $http, $timeout) {
     };
 
     $scope.addHttp = function() {
-        sendCommand($scope, $http, 'aria2.addUri', [$scope.uri.http.uri])
+        sendCommand($scope, $http, 'aria2.addUri', [[$scope.uri.http.uri]])
                 .success(function(data, status) {
             $scope.$emit('ALERT', {
                 "type": "success",
@@ -174,7 +180,7 @@ function SettingsCtrl($scope, $http) {
                 changeset[$scope.settings[i].key] = $scope.settings[i].value;
             }
         }
-        sendCommand($scope, $http, 'aria2.changeGlobalOption', changeset).success(function(data,
+        sendCommand($scope, $http, 'aria2.changeGlobalOption', [changeset]).success(function(data,
                 status) {
             $scope.reset(true);
             init();

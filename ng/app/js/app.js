@@ -83,9 +83,10 @@ function sendCommand($scope, $http, command, data, defaultErrHandler) {
             Accept: "application/json"
         }
     });
-
-    if (defaultErrHandler !== false)
-    {
+    if (typeof defaultErrHandler === 'function') {
+        result.error(defaultErrHandler);
+    }
+    else if (defaultErrHandler !== false) {
         result.error(function(data, status) {
             $scope.$emit('ALERT', {
                 "type": "error",
