@@ -75,11 +75,11 @@
                         <td>
                             <ul class="inline">
                                 <li><strong>{{$index + 1}}</strong></li>
-                                <li><a class='btn btn-mini' href="" data-ng-click="move(download, 1)"><i class="icon-arrow-down"></i></a></li>
-                                <li><a class='btn btn-mini' href="" data-ng-click="move(download, -1)"><i class="icon-arrow-up"></i></a></li>
-                                <li><a class='btn btn-mini' href="" data-ng-show="isActive(download)" data-ng-click="alter(download, 'pause')"><i class="icon-pause"></i></a></li>
-                                <li><a class='btn btn-mini' href="" data-ng-show="isWaiting(download)"  data-ng-click="alter(download, 'unpause')"><i class="icon-play"></i></a></li>
-                                <li><a class='btn btn-mini' href="" data-ng-click="alterConfirm(download, 'remove', 'removeDownloadResult')"><i class="icon-trash"></i></a></li>
+                                <li><button class='btn btn-mini' data-ng-click="move(download, 1)"><i class="icon-arrow-down"></i></button></li>
+                                <li><button class='btn btn-mini' data-ng-click="move(download, -1)"><i class="icon-arrow-up"></i></button></li>
+                                <li><button class='btn btn-mini' data-ng-show="isActive(download)" data-ng-click="alter(download, 'pause')"><i class="icon-pause"></i></button></li>
+                                <li><button class='btn btn-mini' data-ng-show="isWaiting(download)"  data-ng-click="alter(download, 'unpause')"><i class="icon-play"></i></button></li>
+                                <li><button class='btn btn-mini' data-ng-click="alterConfirm(download, 'remove', 'removeDownloadResult')"><i class="icon-trash"></i></button></li>
                             </ul>
                             <dl class="dl-horizontal">
                                 <dt>Status</dt>
@@ -93,6 +93,7 @@
                             <div class="progress progress-striped">
                                 <div class="bar" style="width: {{percentComplete(download)}}%;"></div>
                             </div>
+                            <button class="btn btn-link btn-mini" data-ng-click="showDetails(download)">Data dump</button>
                         </td>
                         <td>
                             <dl class="dl-horizontal">
@@ -114,7 +115,7 @@
                                 </dd>
                                 <dt>File(s)</dt>
                                 <dd>
-                                    <a href="" data-ng-click="toggleCollapse($index)">{{getText($index)}}</a>
+                                    <button class="btn btn-link btn-mini" data-ng-click="toggleCollapse($index)">{{getText($index)}}</button>
                                     <ol id="files" data-ng-class="{collapse: true, in: dc[$index]}">
                                         <li data-ng-repeat="file in download.files">{{filename(file.path)}}</li>
                                     </ol>

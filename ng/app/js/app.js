@@ -3,7 +3,7 @@
 /* Modules */
 // Declare app level module which depends on filters, and services
 angular.module('Berserker', ['Berserker.filters', 'Berserker.services', 'Berserker.directives',
-    '$strap.directives', 'ui.filters'])
+    '$strap.directives', 'ui.filters', 'jsonTree'])
         .config(
         [
             '$routeProvider',

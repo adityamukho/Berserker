@@ -120,3 +120,61 @@ span.percent-complete {
 .slider {
     margin-left: 10px;
 }
+
+.json-tree, .json-tree ul {
+    list-style: none;
+}
+
+.json-tree ul {
+    margin: 0 0 0 20px;
+}
+
+.json-tree .parent {
+    margin: .5em 0 .5em 0;
+    color: black;
+}
+
+.json-tree .parent:before {
+    content: "+";
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.json-tree .parent.open:before{
+    content: "-";
+}
+
+.json-tree .parent > a {
+    font-weight: bold;
+}
+
+.json-tree .parent > ul {
+    display: none;
+}
+
+.json-tree .parent.open > ul {
+    display: block;
+}
+
+.json-tree .child {
+    color: #585858;
+}
+
+.json-tree em {
+    font-family: Arial;
+    font-style: normal;
+    color: rgba(199, 93, 10, 1);
+    font-weight: bold;
+}
+
+.wide-modal {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    left: 5%;
+    overflow-wrap: break-word;
+}
+
+#download-list .progress {
+    margin-bottom: 0;
+}

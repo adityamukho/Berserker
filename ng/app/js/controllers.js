@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-function DownloadCtrl($scope, $http, $timeout) {
+function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     $scope.downloads = [];
     $scope.interval = 1;
     $scope.switches = {
@@ -45,8 +45,27 @@ function DownloadCtrl($scope, $http, $timeout) {
         });
     };
 
+    $scope.showDetails = function(download) {
+        var modalScope = $rootScope.$new();
+        modalScope.details = {
+            results: {
+                download: download
+            },
+            expandPath: 'download'
+        };
+        $modal({
+            template: '/partials/details.html',
+            show: true,
+            backdrop: 'static',
+            scope: modalScope,
+            persist: false,
+            modalClass: 'wide-modal'
+        });
+    };
+
     $scope.move = function(download, direction) {
-        sendCommand($scope, $http, 'aria2.changePosition', [download.gid, direction, 'POS_CUR'], function (data, status) {
+        sendCommand($scope, $http, 'aria2.changePosition', [download.gid, direction, 'POS_CUR'], function(
+                data, status) {
             $scope.$emit('ALERT', {
                 "type": "",
                 "title": "Notice",
@@ -92,7 +111,8 @@ function DownloadCtrl($scope, $http, $timeout) {
         }
 
         if (dlparams.length) {
-            sendCommand($scope, $http, 'system.multicall', [dlparams], false).success(function(data, status) {
+            sendCommand($scope, $http, 'system.multicall', [dlparams], false).success(function(data,
+                    status) {
                 $scope.downloads.length = 0;
                 for (var i = 0; i < data.result.length; ++i) {
                     for (var j = 0; j < data.result[i][0].length; ++j)
@@ -151,7 +171,7 @@ function DownloadCtrl($scope, $http, $timeout) {
         $scope.interval = ev.value;
     });
 }
-DownloadCtrl.$inject = ['$scope', '$http', '$timeout'];
+DownloadCtrl.$inject = ['$scope', '$http', '$timeout', '$modal', '$rootScope'];
 
 function SettingsCtrl($scope, $http) {
     function init() {
