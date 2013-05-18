@@ -1,6 +1,6 @@
 Berserker
 =========
-**Web-based frontend for Aria2-JSONRPC.**
+**Advanced web-based frontend for Aria2-JSONRPC.**
 
 HTTP support complete. BitTorrent and Metalink support coming soon.
 
