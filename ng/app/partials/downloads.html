@@ -93,7 +93,7 @@
                             <div class="progress progress-striped">
                                 <div class="bar" style="width: {{percentComplete(download)}}%;"></div>
                             </div>
-                            <button class="btn btn-link btn-mini" data-ng-click="showDetails(download)">Data dump</button>
+                            <button class="btn btn-link btn-mini" data-ng-click="showDetails(download)">Metadata</button>
                         </td>
                         <td>
                             <dl class="dl-horizontal">
@@ -105,6 +105,8 @@
                                 <dd>{{download.totalLength | bytes}}</dd>
                                 <dt>Completed</dt>
                                 <dd>{{download.completedLength | bytes}}</dd>
+                                <dt>Connections</dt>
+                                <dd>{{download.connections}}</dd>
                                 <dt data-ng-show="download.dir">Destination</dt>
                                 <dd data-ng-show="download.dir">{{download.dir}}</dd>
                                 <dt data-ng-hide="download.infoHash">URIs</dt>

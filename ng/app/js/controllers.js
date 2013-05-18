@@ -30,6 +30,18 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     };
 
     $scope.alter = function(download) {
+//        var i = 1;
+//        var args = arguments;
+//        function send() {
+//            sendCommand($scope, $http, 'aria2.' + args[i], [download.gid], false)
+//                    .success(function() {
+//                if (args[++i]) {
+//                    send();
+//                }
+//            });
+//        }
+//        send();
+        
         for (var i = 1; i < arguments.length; ++i) {
             sendCommand($scope, $http, 'aria2.' + arguments[i], [download.gid], false);
         }
