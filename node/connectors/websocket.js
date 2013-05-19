@@ -12,16 +12,16 @@ function uuid() {
 }
 
 client.on('connectFailed', function(error) {
-    console.error('Client Error: ' + error.toString());
+    console.error('ERROR: Client Error: ' + error.toString());
 });
 
 client.on('connect', function(connection) {
-    console.log('WebSocket client connected to Aria 2.');
+    console.log('INFO: WebSocket client connected to Aria 2.');
     connection.on('error', function(error) {
-        console.error("Connection Error: " + error.toString());
+        console.error("ERROR: Connection Error: " + error.toString());
     });
     connection.on('close', function() {
-        console.log('Connection Closed');
+        console.log('INFO: Connection Closed');
     });
     connection.on('message', function(message) {
         if (message.type === 'utf8') {

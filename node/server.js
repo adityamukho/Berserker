@@ -1,9 +1,9 @@
 //Required modules
-var restify = require('restify'),
+var util = require('./util'),
+        restify = require('restify'),
 //        socketio = require('socket.io'),
         fs = require('fs'),
         mime = require('mime');
-
 
 function init(config, conn) {
     //Start web server
@@ -19,7 +19,7 @@ function init(config, conn) {
     //});
 
     server.listen(config.berserker.server_port, function() {
-        console.log('REST server listening at %s', server.url);
+        console.log('INFO: REST server listening at %s', server.url);
     });
 
     //Routes
@@ -32,10 +32,11 @@ function init(config, conn) {
         }
         conn.send(goptions, function(result) {
             if (result.err) {
+                console.error('ERROR: %j', result.err);
                 next(result.err);
                 return;
             }
-//            console.dir(result.obj);
+            util.eventEmitter.emit(req.params.cmd, req.body);
             res.setHeader('Content-Type', 'application/json');
             res.writeHead(200);
             res.end(JSON.stringify(result.obj));
@@ -45,7 +46,6 @@ function init(config, conn) {
 
     //IMP: This is a catch-all route. Must be placed last.
     server.get(/(.*)/, function sendFile(req, res, next) {
-//        console.dir(req.params);
         var filename = (req.params[0] === '/') ? __dirname + '/../ng/app/index.html' : __dirname
                 + '/../ng/app/'
                 + req.params[0];

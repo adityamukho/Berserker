@@ -1,6 +1,6 @@
 //Required modules
 var config = require('./config'),
-        conn = require(__dirname + '/connectors/' + config.berserker.connector),
+        conn = require('./connectors/' + config.berserker.connector),
         cp = require('child_process');
 
 //Argument array for the aria2c process
@@ -10,8 +10,7 @@ for (var key in config.aria2c) {
 }
 
 //Start aria2c
-//TODO: Enhance this with checks for already running instances. Exit if launch fails.
-console.log('Starting Aria 2 in daemon mode...');
+console.log('INFO: Starting Aria 2 in daemon mode...');
 var aria2c = cp.spawn(config.berserker.aria2c_executable, args, {detached: true, stdio: 'ignore'});
 aria2c.unref();
 
