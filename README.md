@@ -12,11 +12,13 @@ Install
     
 Run
 ---
-1. Edit `node/config.js`.
+1. Edit `node/settings.json`.
+    1. Keys in the *aria2c* property should be valid aria2c options (POSIX long version) without the '--'.
+    1. Any value enclosed in curly braces (like {HOME}) will be replaced by the value of the corresponding environment variable.
 1. `$ node node/Berserker.js`
 1. Open <http://localhost:8000/> (Or whatever port you have set in `node/config.js`).
 
 Notes
 -----
 1. Your Aria2 executable must have support compiled for the *aria2.multicall* function. 
-1. If aria was not built with websocket support, use the restify or http connector instead (See config.js).
+1. If aria was not built with websocket support, use the restify or http connector instead (See settings.json).
