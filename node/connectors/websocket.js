@@ -1,4 +1,6 @@
-var WebSocketClient = require('websocket').client;
+var util = require('../util'),
+        WebSocketClient = require('websocket').client;
+
 var client = new WebSocketClient(),
         conn,
         cbmap = {};
@@ -34,7 +36,8 @@ client.on('connect', function(connection) {
                 cbmap[data.id](result);
             }
             else { //Message initiated by aria, hence no id
-                console.dir(data);
+                util.eventEmitter.emit(data.method, data.params);
+                console.log('INFO: Aria raised event:\n%j', data);
             }
             delete cbmap[data.id];
         }

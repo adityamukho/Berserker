@@ -1,12 +1,9 @@
 var util = require('./util'),
         config = require('./settings.json'),
         mkdirp = require('mkdirp'),
-        fs = require('fs'),
-        events = require('events');
+        fs = require('fs');
 
-var eventEmitter = new events.EventEmitter();
-
-//Replace {ENV} placeholders with their actual values
+//Replace {ENV} placeholders with their actual values.
 util.traverse(config, function(obj, key, value) {
     if (typeof value === 'string') {
         obj[key] = value.replace(/\{[^\{\}]+\}/g, function(v) {
@@ -15,7 +12,7 @@ util.traverse(config, function(obj, key, value) {
     }
 });
 
-//Check if config values are kosher
+//Check if config values are kosher.
 var dirs = [config.aria2c['save-session'], config.aria2c['input-file'], config.aria2c.log];
 for (var i = 0; i < dirs.length; ++i) {
     if (typeof dirs[i] === 'string') {
@@ -45,6 +42,7 @@ for (var i = 0; i < files.length; ++i) {
     });
 }
 
+//Register listener for config save.
 util.eventEmitter.on('aria2.changeGlobalOption', function(options) {
     for (var key in options[0]) {
         config.aria2c[key] = options[0][key];
