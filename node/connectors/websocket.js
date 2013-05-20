@@ -37,7 +37,6 @@ client.on('connect', function(connection) {
             }
             else { //Message initiated by aria, hence no id
                 util.eventEmitter.emit(data.method, data.params);
-                console.log('INFO: Aria raised event:\n%j', data);
             }
             delete cbmap[data.id];
         }

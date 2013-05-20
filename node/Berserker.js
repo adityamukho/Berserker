@@ -12,7 +12,9 @@ for (var key in config.aria2c) {
 //Start aria2c
 console.log('INFO: Starting Aria 2 in daemon mode...');
 var aria2c = cp.spawn(config.berserker.aria2c_executable, args, {detached: true, stdio: 'ignore'});
-aria2c.unref();
+if (config.berserker.detach) {
+    aria2c.unref();
+}
 
 //Connect with aria2c over JSONRPC
 conn.connect(config);
