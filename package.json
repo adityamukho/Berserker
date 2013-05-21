@@ -1,27 +1,27 @@
 {
-    "name": "Berserker",
-    "description": "Web-based frontend for Aria2-JSONRPC",
-    "version": "0.1.0",
-    "main": "node/Berserker.js",
-    "author": {
-        "name": "Aditya Mukhopadhyay",
-        "email": "aditya.mukhopadhyay@gmail.com"
-    },
-    "keywords": [ "download manager", "bittorrent", "aria", "metalink", "gui" ],
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/adityamukho/Berserker.git"
-    },
-    "bugs": {
-        "web": "http://github.com/adityamukho/Berserker/issues"
-    },
-    "license": {
-        "type": "apache20"
-    },
-    "dependencies": {
-        "restify": "",
-        "mime": "",
-        "websocket": "",
-        "mkdirp": ""
-    }
+  "name" : "Berserker",
+  "description" : "Web-based frontend for Aria2-JSONRPC",
+  "version" : "0.1.0",
+  "main" : "Berserker.js",
+  "author" : {
+    "name" : "Aditya Mukhopadhyay",
+    "email" : "aditya.mukhopadhyay@gmail.com"
+  },
+  "keywords" : [ "download manager", "bittorrent", "aria", "metalink", "gui" ],
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/adityamukho/Berserker.git"
+  },
+  "bugs" : {
+    "web" : "http://github.com/adityamukho/Berserker/issues"
+  },
+  "license" : {
+    "type" : "apache20"
+  },
+  "dependencies" : {
+    "router" : "",
+    "mime" : "",
+    "websocket" : "",
+    "mkdirp" : ""
+  }
 }
