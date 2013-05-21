@@ -15,10 +15,10 @@ function init(config, conn) {
         };
 
         req.content = '';
-        req.addListener("data", function(chunk) {
+        req.on("data", function(chunk) {
             req.content += chunk;
         });
-        req.addListener("end", function() {
+        req.on("end", function() {
             if (req.content) {
                 goptions.params = JSON.parse(req.content);
             }
