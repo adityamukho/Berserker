@@ -3,7 +3,8 @@ var util = require('./util'),
         router = require('router'),
         http = require('http'),
         fs = require('fs'),
-        mime = require('mime');
+        mime = require('mime'),
+        WebSocketServer = require('websocket').server;
 
 function init(config, conn) {
     //Routes
@@ -57,8 +58,42 @@ function init(config, conn) {
     });
 
     //Start web server
-    http.createServer(route).listen(config.berserker.server_port, function() {
+    var server = http.createServer(route);
+    server.listen(config.berserker.server_port, function() {
         console.log('INFO: Berserker server listening at http://localhost:%d', config.berserker.server_port);
+    });
+
+    var wsServer = new WebSocketServer({
+        httpServer: server,
+        autoAcceptConnections: false
+    });
+
+    function originIsAllowed(origin) {
+        console.dir(origin);
+        return true;
+    }
+
+    wsServer.on('request', function(request) {
+        if (!originIsAllowed(request.origin)) {
+            // Make sure we only accept requests from an allowed origin
+            request.reject();
+            console.log('INFO: Connection from origin ' + request.origin + ' rejected.');
+            return;
+        }
+
+        var connection = request.accept('echo-protocol', request.origin);
+        console.log('INFO: Connection accepted.');
+        connection.on('message', function(message) {
+            if (message.type === 'utf8') {
+                connection.sendUTF(message.utf8Data);
+            }
+            else if (message.type === 'binary') {
+                connection.sendBytes(message.binaryData);
+            }
+        });
+        connection.on('close', function(reasonCode, description) {
+            console.log('INFO: Peer ' + connection.remoteAddress + ' disconnected.');
+        });
     });
 }
 

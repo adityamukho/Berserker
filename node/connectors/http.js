@@ -3,20 +3,29 @@ var conf;
 
 function connect(config) {
     conf = config;
+    console.log("Initialized HTTP connector.");
 }
 
 function send(command, callback) {
     command.jsonrpc = '2.0';
     command.id = 'berserker';
-    var result = {};
-    var req = http.request({
+
+    var options = {
         port: conf.aria2c['rpc-listen-port'],
         method: 'POST',
         path: '/jsonrpc'
-    }, function(res) {
+    };
+    if (conf.aria2c['rpc-user'] && conf.aria2c['rpc-passwd']) {
+        options.auth = conf.aria2c['rpc-user'] + ':' + conf.aria2c['rpc-passwd'];
+    }
+
+    var req = http.request(options, function(res) {
         if (typeof callback === 'function') {
-            result.res = res;
-            result.req = req;
+            var result = {
+                res: res,
+                req: req
+            };
+
             req.on('error', function(e) {
                 result.err = e.message;
             });
@@ -32,12 +41,8 @@ function send(command, callback) {
             });
         }
     });
-    if (conf.aria2c['rpc-user'] && conf.aria2c['rpc-passwd']) {
-        req.auth = conf.aria2c['rpc-user'] + ':' + conf.aria2c['rpc-passwd'];
-    }
 
-    req.write(JSON.stringify(command));
-    req.end();
+    req.end(JSON.stringify(command));
 }
 
 // Functions which will be available to external callers
