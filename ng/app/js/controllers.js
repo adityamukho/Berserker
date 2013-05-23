@@ -95,6 +95,9 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
             return download.pc;
         }
         download.pc = (100 * download.completedLength / download.totalLength).toFixed(1);
+        if (isNaN(download.pc)) {
+            download.pc = 0;
+        }
         return download.pc;
     }
 
