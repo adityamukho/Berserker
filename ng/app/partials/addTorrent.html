@@ -2,9 +2,18 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>Add Torrent File</h3>
 </div>
-<div class="modal-body">
-    Not implemented yet.
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-inverse" data-ng-click="hide()"><i class="icon-remove icon-white"></i> Cancel</button>
-</div>
+<form class="form-horizontal uri-form" name="torrentForm" data-ng-upload action="/upload/torrent">
+    <div class="modal-body">
+        <div class="control-group">
+            <label class="control-label" for="torrent">Torrent File</label>
+            <div class="controls">
+                <input type="file" name="torrent" required class="span3">
+                <!--<span class="error" data-ng-show="torrentForm.torrent.$error.required">[Required]</span>-->
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-disabled="!torrentForm.$valid" data-upload-submit="addTorrent(contents, completed);hide()"><i class="icon-ok icon-white"></i> Add</button>
+        <button type="button" class="btn btn-inverse" data-ng-click="hide()"><i class="icon-remove icon-white"></i> Cancel</button>
+    </div>
+</form>

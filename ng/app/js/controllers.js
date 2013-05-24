@@ -41,7 +41,7 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
 //            });
 //        }
 //        send();
-        
+
         for (var i = 1; i < arguments.length; ++i) {
             sendCommand($scope, $http, 'aria2.' + arguments[i], [download.gid], false);
         }
@@ -140,7 +140,7 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
             $scope.downloads.length = 0;
         }
 
-        $scope.cronid = $timeout(updateStatus, 1000 * $scope.interval);
+//        $scope.cronid = $timeout(updateStatus, 1000 * $scope.interval);
         return 'DownloadCtrl.updateStatus'; //cronid
     }
     updateStatus();
@@ -162,9 +162,7 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
         $scope.uri = {
             http: {
                 uri: ''
-            },
-            torrent: {},
-            metalink: {}
+            }
         };
         $('.uri-form .ng-dirty').removeClass('ng-dirty').addClass('ng-pristine');
     };
@@ -179,6 +177,23 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
             });
             $scope.reset();
         });
+    };
+
+    $scope.addTorrent = function(content, completed) {
+        console.dir(content);
+        console.dir(completed);
+        if (completed && content > 0) {
+//            sendCommand($scope, $http, 'aria2.addTorrent', [[atob(content)]])
+//                    .success(function(data, status) {
+//                console.dir(data);
+//                $scope.$emit('ALERT', {
+//                    "type": "success",
+//                    "title": "Success",
+//                    "content": "Torrent: <code>" + $scope.uri.torrent.file + "</code> added."
+//                });
+//                $scope.reset();
+//            });
+        }
     };
 
     $scope.reset();

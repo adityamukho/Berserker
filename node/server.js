@@ -4,6 +4,7 @@ var util = require('./util'),
         http = require('http'),
         fs = require('fs'),
         mime = require('mime'),
+        atob = require('atob'),
         WebSocketServer = require('websocket').server;
 
 function init(config, conn) {
@@ -23,19 +24,29 @@ function init(config, conn) {
             if (req.content) {
                 goptions.params = JSON.parse(req.content);
             }
+            sendCommand(conn, res, goptions);
+        });
+    });
 
-            conn.send(goptions, function(result) {
-                if (result.err) {
-                    console.error('ERROR: %j', result.err);
-                    res.writeHead(500, result.err);
-                    res.end();
-                    return;
-                }
-                util.eventEmitter.emit(req.params.cmd, req.body);
-                res.setHeader('Content-Type', 'application/json');
-                res.writeHead(200);
-                res.end(JSON.stringify(result.obj));
-            });
+    route.post('/upload/{type}', function upload(req, res) {
+        req.content = '';
+        req.on("data", function(chunk) {
+            req.content += chunk;
+        });
+        req.on("end", function() {
+            if (req.content) {
+                var method = 'aria2.add' + req.params.type.charAt(0).toUpperCase()
+                        + req.params.type.substr(1).toLowerCase();
+                var goptions = {
+                    method: method,
+                    params: [atob(req.content)]
+                };
+                sendCommand(conn, res, goptions);
+            }
+            else {
+                res.writeHead(400);
+                res.end('No Data');
+            }
         });
     });
 
@@ -94,6 +105,21 @@ function init(config, conn) {
         connection.on('close', function(reasonCode, description) {
             console.log('INFO: Peer ' + connection.remoteAddress + ' disconnected.');
         });
+    });
+}
+
+function sendCommand(conn, res, goptions) {
+    conn.send(goptions, function(result) {
+        if (result.err) {
+            console.error('ERROR: %j', result.err);
+            res.writeHead(500, result.err);
+            res.end();
+            return;
+        }
+        util.eventEmitter.emit(goptions.method, goptions.params);
+        res.setHeader('Content-Type', 'application/json');
+        res.writeHead(200);
+        res.end(JSON.stringify(result.obj));
     });
 }
 
