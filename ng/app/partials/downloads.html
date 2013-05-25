@@ -97,8 +97,8 @@
               <dl class="dl-horizontal">
                 <dt data-ng-show="download.infoHash">Torrent</dt>
                 <dd data-ng-show="download.infoHash"><strong>{{download.bittorrent.info.name}}</strong></dd>
-                <dt data-ng-hide="download.infoHash">File</dt>
-                <dd data-ng-hide="download.infoHash"><strong>{{download.files[0].path.substring(download.files[0].path.lastIndexOf('/') + 1)}}</strong></dd>
+                <dt data-ng-show="download.files[0].path">File</dt>
+                <dd data-ng-show="download.files[0].path"><strong>{{download.files[0].path.substring(download.files[0].path.lastIndexOf('/') + 1)}}</strong></dd>
                 <dt>Size</dt>
                 <dd>{{download.totalLength | bytes}}</dd>
                 <dt>Completed</dt>
@@ -109,14 +109,15 @@
                 <dd data-ng-show="download.dir">{{download.dir}}</dd>
                 <dt data-ng-hide="download.infoHash">URIs</dt>
                 <dd data-ng-hide="download.infoHash">
-                  <ul class="unstyled">
+                  <button class="btn btn-link btn-mini" data-ng-click="toggleCollapse($index, 'uris')">{{getText($index, 'uris')}}</button>
+                  <ol id="uris" data-ng-class="{collapse: true, in: dc.uris[$index]}">
                     <li data-ng-repeat="uri in download.files[0].uris | unique: 'uri'">{{uri.uri}}</li>
-                  </ul>
+                  </ol>
                 </dd>
-                <dt>File(s)</dt>
-                <dd>
-                  <button class="btn btn-link btn-mini" data-ng-click="toggleCollapse($index)">{{getText($index)}}</button>
-                  <ol id="files" data-ng-class="{collapse: true, in: dc[$index]}">
+                <dt data-ng-show="download.files[0].path">File(s)</dt>
+                <dd data-ng-show="download.files[0].path">
+                  <button class="btn btn-link btn-mini" data-ng-click="toggleCollapse($index, 'files')">{{getText($index, 'files')}}</button>
+                  <ol id="files" data-ng-class="{collapse: true, in: dc.files[$index]}">
                     <li data-ng-repeat="file in download.files">{{filename(file.path)}}</li>
                   </ol>
                 </dd>
