@@ -9,7 +9,9 @@
         "max-connection-per-server": 4,
         "save-session": "{HOME}/.aria2/session",
         "input-file": "{HOME}/.aria2/session",
-        "rpc-listen-all": "false"
+        "rpc-listen-all": "false",
+        "follow-metalink": "true",
+        "follow-torrent": "true"
     },
     "berserker": {
         "aria2c_executable": "aria2c",

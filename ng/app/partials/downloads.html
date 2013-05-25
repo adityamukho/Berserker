@@ -1,135 +1,133 @@
 <div class="mini-layout" id="status">
-    <div class="row">
-        <div class="box-title">
-            <div class="row">
-                <h4>Status</h4>
-            </div>
-        </div>
+  <div class="row">
+    <div class="box-title">
+      <div class="row">
+        <h4>Status</h4>
+      </div>
     </div>
-    <div class="row box-body">
-        <div class="span8">
-            <dl class="dl-horizontal">
-                <dt>Aria Version</dt>
-                <dd>
-                    {{version.version}}
-                </dd>
-                <dt>Enabled Features</dt>
-                <dd>
-                    <ul class="inline">
-                        <li data-ng-repeat="feature in version.enabledFeatures">
-                            "{{feature}}"
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-        </div>
-        <div class="span3">
-            <dl class="dl-horizontal">
-                <dt>Download Speed</dt>
-                <dd>{{stats.downloadSpeed | bytes}}/s</dd>
-                <dt>Upload Speed</dt>
-                <dd>{{stats.uploadSpeed | bytes}}/s</dd>
-            </dl>
-        </div>
+  </div>
+  <div class="row box-body">
+    <div class="span8">
+      <dl class="dl-horizontal">
+        <dt>Aria Version</dt>
+        <dd>
+          {{version.version}}
+        </dd>
+        <dt>Enabled Features</dt>
+        <dd>
+          <ul class="inline">
+            <li data-ng-repeat="feature in version.enabledFeatures">
+              "{{feature}}"
+            </li>
+          </ul>
+        </dd>
+      </dl>
     </div>
+    <div class="span3">
+      <dl class="dl-horizontal">
+        <dt>Download Speed</dt>
+        <dd>{{stats.downloadSpeed | bytes}}/s</dd>
+        <dt>Upload Speed</dt>
+        <dd>{{stats.uploadSpeed | bytes}}/s</dd>
+      </dl>
+    </div>
+  </div>
 </div>
 <div class="mini-layout" id="downloads">
-    <div class="row">
-        <div class="box-title">
-            <div class="row">
-                <h4 class="pull-left">Downloads</h4>
-                <div class="pull-right controls">
-                    <ul class="inline">
-                        <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addHttp.html'"><i class="icon-plus icon-white"></i> URL</button></li>
-                        <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addTorrent.html'"><i class="icon-plus icon-white"></i> Torrent</button></li>
-                        <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addMetalink.html'"><i class="icon-plus icon-white"></i> Metalink</button></li>
-                    </ul>
-                </div>
-            </div>
+  <div class="row">
+    <div class="box-title">
+      <div class="row">
+        <h4 class="pull-left">Downloads</h4>
+        <div class="pull-right controls">
+          <ul class="inline">
+            <li><button type="button" class="btn btn-success" data-bs-modal="'partials/addHttp.html'"><i class="icon-plus icon-white"></i> URL</button></li>
+          </ul>
         </div>
+      </div>
     </div>
-    <div class="row box-body">
-        <div class="span11" id="download-list">
-            <div class="control-group">
-                <div class="controls">
-                    <div class="btn-group" data-bs-buttons-checkbox>
-                        <button type="button" class="btn btn-mini" data-ng-model="switches.active"><i class="icon-play"></i> Active ({{stats.numActive}})</button>
-                        <button type="button" class="btn btn-mini" data-ng-model="switches.waiting"><i class="icon-pause"></i> Paused ({{stats.numWaiting}})</button>
-                        <button type="button" class="btn btn-mini" data-ng-model="switches.stopped"><i class="icon-stop"></i> Stopped ({{stats.numStopped}})</button>
-                    </div>
-                    <div class="pull-right">
-                        <strong>Refresh Interval ({{interval}}s)</strong>
-                        <input type="text" class="slider span2" id="update-slider" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-selection="after" data-slider-tooltip="show">
-                    </div>
-                </div>
-            </div>
-            <table class="table table-hover table-bordered table-condensed">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>File</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="download in downloads">
-                        <td>
-                            <ul class="inline">
-                                <li><strong>{{$index + 1}}</strong></li>
-                                <li><button class='btn btn-mini' data-ng-click="move(download, 1)"><i class="icon-arrow-down"></i></button></li>
-                                <li><button class='btn btn-mini' data-ng-click="move(download, -1)"><i class="icon-arrow-up"></i></button></li>
-                                <li><button class='btn btn-mini' data-ng-show="isActive(download)" data-ng-click="alter(download, 'pause')"><i class="icon-pause"></i></button></li>
-                                <li><button class='btn btn-mini' data-ng-show="isWaiting(download)"  data-ng-click="alter(download, 'unpause')"><i class="icon-play"></i></button></li>
-                                <li><button class='btn btn-mini' data-ng-click="alterConfirm(download, 'remove', 'removeDownloadResult')"><i class="icon-trash"></i></button></li>
-                            </ul>
-                            <dl class="dl-horizontal">
-                                <dt>Status</dt>
-                                <dd>{{download.status}}</dd>
-                                <dt data-ng-show="download.downloadSpeed">Download Speed</dt>
-                                <dd data-ng-show="download.downloadSpeed">{{download.downloadSpeed | bytes}}/s</dd>
-                                <dt data-ng-show="download.uploadSpeed">Upload Speed</dt>
-                                <dd data-ng-show="download.uploadSpeed">{{download.uploadSpeed | bytes}}/s</dd>
-                            </dl>
-                            <span class="badge percent-complete pull-left">{{percentComplete(download)}}%</span>
-                            <div class="progress progress-striped">
-                                <div class="bar" style="width: {{percentComplete(download)}}%;"></div>
-                            </div>
-                            <button class="btn btn-link btn-mini" data-ng-click="showDetails(download)">Metadata</button>
-                        </td>
-                        <td>
-                            <dl class="dl-horizontal">
-                                <dt data-ng-show="download.infoHash">Torrent</dt>
-                                <dd data-ng-show="download.infoHash"><strong>{{download.bittorrent.info.name}}</strong></dd>
-                                <dt data-ng-hide="download.infoHash">File</dt>
-                                <dd data-ng-hide="download.infoHash"><strong>{{download.files[0].path.substring(download.files[0].path.lastIndexOf('/') + 1)}}</strong></dd>
-                                <dt>Size</dt>
-                                <dd>{{download.totalLength | bytes}}</dd>
-                                <dt>Completed</dt>
-                                <dd>{{download.completedLength | bytes}}</dd>
-                                <dt>Connections</dt>
-                                <dd>{{download.connections}}</dd>
-                                <dt data-ng-show="download.dir">Destination</dt>
-                                <dd data-ng-show="download.dir">{{download.dir}}</dd>
-                                <dt data-ng-hide="download.infoHash">URIs</dt>
-                                <dd data-ng-hide="download.infoHash">
-                                    <ul class="unstyled">
-                                        <li data-ng-repeat="uri in download.files[0].uris | unique: 'uri'">{{uri.uri}}</li>
-                                    </ul>
-                                </dd>
-                                <dt>File(s)</dt>
-                                <dd>
-                                    <button class="btn btn-link btn-mini" data-ng-click="toggleCollapse($index)">{{getText($index)}}</button>
-                                    <ol id="files" data-ng-class="{collapse: true, in: dc[$index]}">
-                                        <li data-ng-repeat="file in download.files">{{filename(file.path)}}</li>
-                                    </ol>
-                                </dd>
-                            </dl>
-                        </td>
-                    </tr>
-                    <tr data-ng-hide="downloads.length">
-                        <td colspan="2">No downloads</td>
-                    </tr>
-                </tbody>
-            </table>
+  </div>
+  <div class="row box-body">
+    <div class="span11" id="download-list">
+      <div class="control-group">
+        <div class="controls">
+          <div class="btn-group" data-bs-buttons-checkbox>
+            <button type="button" class="btn btn-mini" data-ng-model="switches.active"><i class="icon-play"></i> Active ({{stats.numActive}})</button>
+            <button type="button" class="btn btn-mini" data-ng-model="switches.waiting"><i class="icon-pause"></i> Paused ({{stats.numWaiting}})</button>
+            <button type="button" class="btn btn-mini" data-ng-model="switches.stopped"><i class="icon-stop"></i> Stopped ({{stats.numStopped}})</button>
+          </div>
+          <div class="pull-right">
+            <strong>Refresh Interval ({{interval}}s)</strong>
+            <input type="text" class="slider span2" id="update-slider" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-selection="after" data-slider-tooltip="show">
+          </div>
         </div>
+      </div>
+      <table class="table table-hover table-bordered table-condensed">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>File</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="download in downloads">
+            <td>
+              <ul class="inline">
+                <li><strong>{{$index + 1}}</strong></li>
+                <li><button class='btn btn-mini' data-ng-click="move(download, 1)"><i class="icon-arrow-down"></i></button></li>
+                <li><button class='btn btn-mini' data-ng-click="move(download, -1)"><i class="icon-arrow-up"></i></button></li>
+                <li><button class='btn btn-mini' data-ng-show="isActive(download)" data-ng-click="alter(download, 'pause')"><i class="icon-pause"></i></button></li>
+                <li><button class='btn btn-mini' data-ng-show="isWaiting(download)"  data-ng-click="alter(download, 'unpause')"><i class="icon-play"></i></button></li>
+                <li><button class='btn btn-mini' data-ng-click="alterConfirm(download, 'remove', 'removeDownloadResult')"><i class="icon-trash"></i></button></li>
+              </ul>
+              <dl class="dl-horizontal">
+                <dt>Status</dt>
+                <dd>{{download.status}}</dd>
+                <dt data-ng-show="download.downloadSpeed">Download Speed</dt>
+                <dd data-ng-show="download.downloadSpeed">{{download.downloadSpeed | bytes}}/s</dd>
+                <dt data-ng-show="download.uploadSpeed">Upload Speed</dt>
+                <dd data-ng-show="download.uploadSpeed">{{download.uploadSpeed | bytes}}/s</dd>
+              </dl>
+              <span class="badge percent-complete pull-left">{{percentComplete(download)}}%</span>
+              <div class="progress progress-striped">
+                <div class="bar" style="width: {{percentComplete(download)}}%;"></div>
+              </div>
+              <button class="btn btn-link btn-mini" data-ng-click="showDetails(download)">Metadata</button>
+            </td>
+            <td>
+              <dl class="dl-horizontal">
+                <dt data-ng-show="download.infoHash">Torrent</dt>
+                <dd data-ng-show="download.infoHash"><strong>{{download.bittorrent.info.name}}</strong></dd>
+                <dt data-ng-hide="download.infoHash">File</dt>
+                <dd data-ng-hide="download.infoHash"><strong>{{download.files[0].path.substring(download.files[0].path.lastIndexOf('/') + 1)}}</strong></dd>
+                <dt>Size</dt>
+                <dd>{{download.totalLength | bytes}}</dd>
+                <dt>Completed</dt>
+                <dd>{{download.completedLength | bytes}}</dd>
+                <dt>Connections</dt>
+                <dd>{{download.connections}}</dd>
+                <dt data-ng-show="download.dir">Destination</dt>
+                <dd data-ng-show="download.dir">{{download.dir}}</dd>
+                <dt data-ng-hide="download.infoHash">URIs</dt>
+                <dd data-ng-hide="download.infoHash">
+                  <ul class="unstyled">
+                    <li data-ng-repeat="uri in download.files[0].uris | unique: 'uri'">{{uri.uri}}</li>
+                  </ul>
+                </dd>
+                <dt>File(s)</dt>
+                <dd>
+                  <button class="btn btn-link btn-mini" data-ng-click="toggleCollapse($index)">{{getText($index)}}</button>
+                  <ol id="files" data-ng-class="{collapse: true, in: dc[$index]}">
+                    <li data-ng-repeat="file in download.files">{{filename(file.path)}}</li>
+                  </ol>
+                </dd>
+              </dl>
+            </td>
+          </tr>
+          <tr data-ng-hide="downloads.length">
+            <td colspan="2">No downloads</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
