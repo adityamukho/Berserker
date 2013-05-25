@@ -178,3 +178,7 @@ span.percent-complete {
 #download-list .progress {
     margin-bottom: 0;
 }
+
+ol#uris, ol#files {
+  margin-bottom: 0;
+}
