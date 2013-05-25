@@ -4,8 +4,6 @@ Berserker
 
 ![Main interface](/downloads.jpg/)
 
-HTTP(s)/FTP/Magnet support complete. File upload (BitTorrent and Metalink) support coming soon.
-
 Install
 -------
 1. Install [Aria 2](http://aria2.sourceforge.net/) from the site or from your distribution's package repositories.
