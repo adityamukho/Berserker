@@ -13,6 +13,11 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     uris: [],
     files: []
   };
+  $scope.tooltip = {
+    uri: 'HTTP(s) / FTP / Magnet / Torrent / Metalink URL',
+    continue: 'Continue from a partial download started by curl, wget, a browser, etc.',
+    dir: 'Download to specified folder.'
+  }
 
   $scope.hex2bin = function(n) {
     function checkHex(n) {
