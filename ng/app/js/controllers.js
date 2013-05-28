@@ -166,22 +166,21 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
 
   $scope.reset = function() {
     $scope.uri = {
-      http: {
-        uri: ''
-      },
-      torrent: {},
-      metalink: {}
+      uri: '',
+      options: {
+        continue: false
+      }
     };
     $('.uri-form .ng-dirty').removeClass('ng-dirty').addClass('ng-pristine');
   };
 
   $scope.addHttp = function() {
-    sendCommand($scope, $http, 'aria2.addUri', [[$scope.uri.http.uri]])
+    sendCommand($scope, $http, 'aria2.addUri', [[$scope.uri.uri], $scope.uri.options])
             .success(function(data, status) {
       $scope.$emit('ALERT', {
         "type": "success",
         "title": "Success",
-        "content": "URI: <code>" + $scope.uri.http.uri + "</code> added."
+        "content": "URI: <code>" + $scope.uri.uri + "</code> added."
       });
       $scope.reset();
     });
