@@ -10,9 +10,15 @@
         <input type="text" id="text" name="uri" required data-ng-model="uri.uri" placeholder="URL" class="span3">
         <span class="error" data-ng-show="httpForm.uri.$error.required">[Required]</span>
       </div>
+      <br>
+      <label class="control-label" for="dir">Destination</label>
+      <div class="controls">
+        <input type="text" id="dir" name="dir" data-ng-model="uri.options.dir" placeholder="Path" class="span3">
+      </div>
+      <br>
       <label class="control-label" for="continue">Continue</label>
       <div class="controls">
-        <input type="checkbox" data-ng-model="uri.options.continue" name="continue" data-ng-true-value="true" data-ng-false-value="false">
+        <input type="checkbox" id="continue" data-ng-model="uri.options.continue" name="continue" data-ng-true-value="true" data-ng-false-value="false">
       </div>
     </div>
   </form>

@@ -26,7 +26,7 @@ function init(config, conn) {
 
             conn.send(goptions, function(result) {
                 if (result.err) {
-                    console.error('ERROR: %j', result.err);
+                    console.error('ERROR: %s', result.err);
                     res.writeHead(500, result.err);
                     res.end();
                     return;

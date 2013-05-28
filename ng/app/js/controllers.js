@@ -168,13 +168,16 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     $scope.uri = {
       uri: '',
       options: {
-        continue: false
+        continue: false,
       }
     };
     $('.uri-form .ng-dirty').removeClass('ng-dirty').addClass('ng-pristine');
   };
 
   $scope.addHttp = function() {
+    if (!$scope.uri.options.dir) {
+      delete $scope.uri.options.dir;
+    }
     sendCommand($scope, $http, 'aria2.addUri', [[$scope.uri.uri], $scope.uri.options])
             .success(function(data, status) {
       $scope.$emit('ALERT', {
