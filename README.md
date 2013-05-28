@@ -6,7 +6,7 @@ Berserker
 
 Features
 --------
-1. Node.js backend to manage the aria process, create destination and config directories, etc.
+1. *Node.js* backend to manage the aria process, create destination and config directories, etc.
 1. You can shut down the Node.js backend as well as the web-frontend and aria will keep downloading in the backround. Fire up the server and web ui anytime later to get a status update.
 1. JSON-based transport to ensure lightweight and fast data transfers with minimal markup overhead.
 1. Uses websockets to communicate with aria process. Will have support for websockets in the browser side soon.
