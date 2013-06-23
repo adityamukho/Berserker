@@ -1,17 +1,18 @@
 {
     "aria2c": {
         "rpc-listen-port": 6800,
-        "dir": "{HOME}/Downloads/aria2",
-        "log": "{HOME}/.aria2/aria2.log",
+        "dir": "/home/aditya/Downloads/aria2",
+        "log": "/home/aditya/.aria2/aria2.log",
         "log-level": "error",
         "dht-listen-port": 6801,
         "min-split-size": "1M",
         "max-connection-per-server": 4,
-        "save-session": "{HOME}/.aria2/session",
-        "input-file": "{HOME}/.aria2/session",
+        "save-session": "/home/aditya/.aria2/session",
+        "input-file": "/home/aditya/.aria2/session",
         "rpc-listen-all": "false",
         "follow-metalink": "true",
-        "follow-torrent": "true"
+        "follow-torrent": "true",
+        "max-overall-upload-limit": "10K"
     },
     "berserker": {
         "aria2c_executable": "aria2c",

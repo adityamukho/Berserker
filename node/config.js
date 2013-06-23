@@ -44,17 +44,19 @@ for (var i = 0; i < files.length; ++i) {
 
 //Register listener for config save.
 util.eventEmitter.on('aria2.changeGlobalOption', function(options) {
-    for (var key in options[0]) {
-        settings.aria2c[key] = options[0][key];
+    if (options) {
+        for (var key in options[0]) {
+            settings.aria2c[key] = options[0][key];
+        }
+        fs.writeFile(__dirname + '/settings.json', JSON.stringify(settings, null, 4), function(err) {
+            if (err) {
+                console.error('ERROR: Cannot write to settings file "%s"', err.path);
+            }
+            else {
+                console.log("INFO: Settings saved.");
+            }
+        });
     }
-    fs.writeFile(__dirname + '/settings.json', JSON.stringify(settings, null, 4), function(err) {
-        if (err) {
-            console.error('ERROR: Cannot write to settings file "%s"', err.path);
-        }
-        else {
-            console.log("INFO: Settings saved.");
-        }
-    });
 });
 
 module.exports = settings;

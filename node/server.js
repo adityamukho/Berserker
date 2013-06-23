@@ -31,7 +31,7 @@ function init(config, conn) {
                     res.end();
                     return;
                 }
-                util.eventEmitter.emit(req.params.cmd, req.body);
+                util.eventEmitter.emit(req.params.cmd, goptions.params);
                 res.setHeader('Content-Type', 'application/json');
                 res.writeHead(200);
                 res.end(JSON.stringify(result.obj));
