@@ -69,7 +69,6 @@ function init(config, conn) {
     });
 
     function originIsAllowed(origin) {
-        console.dir(origin);
         return true;
     }
 
