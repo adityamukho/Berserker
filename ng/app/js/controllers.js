@@ -57,7 +57,7 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     }
   };
 
-  $scope.alterConfirm = function(download) {
+  $scope.alterConfirm = function() {
     var func = this;
     var args = arguments;
     bootbox.confirm('Are you sure?', function(result) {
