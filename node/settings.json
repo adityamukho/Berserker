@@ -12,7 +12,8 @@
         "rpc-listen-all": "false",
         "follow-metalink": "true",
         "follow-torrent": "true",
-        "max-overall-upload-limit": "10K"
+        "max-overall-upload-limit": "10K",
+        "max-overall-download-limit": "30K"
     },
     "berserker": {
         "aria2c_executable": "aria2c",

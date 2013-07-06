@@ -182,3 +182,7 @@ span.percent-complete {
 ol#uris, ol#files {
   margin-bottom: 0;
 }
+
+.nav {
+  width: 87%;
+}

@@ -16,17 +16,22 @@
                     <ul class="nav">
                         <li data-match-route="/downloads"><a href="#/downloads"><i class="icon-download-alt"></i><span>Downloads</span></a></li>
                         <li data-match-route="/settings"><a href="#/settings"><i class="icon-wrench"></i><span>Settings</span></a></li>
+                        <li style="float: right;">
+                          <a href="https://github.com/adityamukho/Berserker/issues/new" target="_blank">
+                            <i class="icon-warning-sign"></i><span>Report Issue</span>
+                          </a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            
+
             <div id="alerts">
                 <div class="alert fade" data-ng-repeat="alert in alerts" data-bs-alert="alert"></div>
             </div>
 
             <div data-ng-view></div>
             <hr/>
-            
+
             <div><strong>Berserker</strong> -- Advanced Web-based frontend for Aria2-JSONRPC: v<span data-app-version></span><span id="copyright" class="pull-right">Copyright © 2013 - 2014 <a href="https://github.com/adityamukho" target="_blank">Aditya Mukhopadhyay</a></span></div>
 
             <script src="lib/jquery/jquery.js"></script>
