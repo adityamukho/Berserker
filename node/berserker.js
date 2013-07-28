@@ -11,6 +11,8 @@ for (var key in config.aria2c) {
 
 //Start aria2c
 console.log('INFO: Starting Aria 2 in daemon mode...');
+console.log(
+        'INFO: Sometimes, aria refuses incoming websocket connections on first try. Try restarting Berserker in such situations.');
 var aria2c = cp.spawn(config.berserker.aria2c_executable, args, {detached: true, stdio: 'ignore'});
 if (config.berserker.detach) {
     aria2c.unref();

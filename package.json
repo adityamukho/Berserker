@@ -1,8 +1,8 @@
 {
-    "name": "Berserker",
+    "name": "berserker",
     "description": "Web-based frontend for Aria2-JSONRPC",
     "version": "0.2.1",
-    "main": "node/Berserker.js",
+    "main": "node/berserker.js",
     "author": {
         "name": "Aditya Mukhopadhyay",
         "email": "aditya.mukhopadhyay@gmail.com"
@@ -23,5 +23,14 @@
         "mime": "1.2.9",
         "websocket": "1.0.8",
         "mkdirp": "0.3.5"
+    },
+    "scripts": {
+        "start": "node ./node/berserker.js"
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "bin": {
+        "berserker": "./bin/berserker"
     }
 }
