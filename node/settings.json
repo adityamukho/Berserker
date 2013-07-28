@@ -13,6 +13,8 @@
         "follow-metalink": "true",
         "follow-torrent": "true",
         "max-overall-upload-limit": "10K",
+        "max-overall-download-limit": "30K",
+        "max-concurrent-downloads": "2"
     },
     "berserker": {
         "aria2c_executable": "aria2c",

@@ -183,5 +183,11 @@ ol#uris, ol#files {
 }
 
 .nav {
-  width: 87%;
+  width: 80%;
+}
+
+.navbar .brand {
+    background: url(../img/logo.png);
+    background-repeat: no-repeat;
+    padding-left: 50px;
 }
