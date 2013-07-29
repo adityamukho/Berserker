@@ -15,14 +15,16 @@ Install
 -------
 1. Install [Aria 2](http://aria2.sourceforge.net/) from the site or from your distribution's package repositories.
 2. Install [Node.js](http://nodejs.org/) (and NPM) from the site or from your distribution's package repositories.
-2. Run `$ npm install` from the project's root folder.
+2. `$ sudo npm install -g berserker`
     
 Run
 ---
-1. Edit `node/settings.json`.
+1. (First Run) `$ berserker`
+1. This will create file `settings.json` under the `$HOME/.berserker` folder.
+1. Edit `settings.json`.
     1. Keys in the *aria2c* property should be valid aria2c options (POSIX long version) without the '--'.
     1. Any value enclosed in curly braces (like {HOME}) will be replaced by the value of the corresponding environment variable.
-1. `$ node node/Berserker.js`
+1. `$ berserker`
 1. Open <http://localhost:8000/> (Or whatever port you have set in `node/settings.json`).
 
 Notes
