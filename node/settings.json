@@ -11,10 +11,7 @@
         "input-file": "/home/aditya/.aria2/session",
         "rpc-listen-all": "false",
         "follow-metalink": "true",
-        "follow-torrent": "true",
-        "max-overall-upload-limit": "10K",
-        "max-overall-download-limit": "30K",
-        "max-concurrent-downloads": "2"
+        "follow-torrent": "true"
     },
     "berserker": {
         "aria2c_executable": "aria2c",
