@@ -74,7 +74,8 @@ button#mod {
     margin-bottom: 0;
 }
 #status .box-body,
-#downloads .box-body {
+#downloads .box-body,
+#info .box-body {
     font-size: 10px;
 }
 

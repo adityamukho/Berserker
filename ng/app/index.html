@@ -1,48 +1,75 @@
 <!doctype html>
 <html lang="en" data-ng-app="Berserker">
-    <head>
-        <meta charset="utf-8">
-        <title>Berserker</title>
-        <link href="css/bootstrap_united.css" rel="stylesheet">
-        <link href="css/bootstrap-responsive.css" rel="stylesheet">
-        <link href="lib/slider/css/slider.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/app.css"/>
-    </head>
-    <body>
-        <div class="container">
-            <div class="navbar" data-bs-navbar>
-                <div class="navbar-inner">
-                    <a class="brand" href="#">Berserker</a>
-                    <ul class="nav">
-                        <li data-match-route="/downloads"><a href="#/downloads"><i class="icon-download-alt icon-white"></i><span>Downloads</span></a></li>
-                        <li data-match-route="/settings"><a href="#/settings"><i class="icon-wrench icon-white"></i><span>Settings</span></a></li>
-                        <li style="float: right;">
-                          <a href="https://github.com/adityamukho/Berserker/issues/new" target="_blank">
-                            <i class="icon-warning-sign icon-white"></i><span>Report Issue</span>
-                          </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<head>
+<meta charset="utf-8">
+<title>Berserker</title>
+<link href="css/bootstrap_united.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="lib/slider/css/slider.css" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="navbar" data-bs-navbar>
+			<div class="navbar-inner">
+				<a class="brand" href="#">Berserker</a>
+				<ul class="nav">
+					<li data-match-route="/downloads"><a href="#/downloads"><i
+							class="icon-download-alt icon-white"></i><span>Downloads</span></a></li>
+					<li data-match-route="/settings"><a href="#/settings"><i
+							class="icon-wrench icon-white"></i><span>Settings</span></a></li>
+					<li style="float: right;"><a
+						href="https://github.com/adityamukho/Berserker/issues/new"
+						target="_blank"> <i class="icon-warning-sign icon-white"></i><span>Report
+								Issue</span>
+					</a></li>
+				</ul>
+			</div>
+		</div>
 
-            <div id="alerts">
-                <div class="alert fade" data-ng-repeat="alert in alerts" data-bs-alert="alert"></div>
-            </div>
+		<div id="alerts">
+			<div class="alert fade" data-ng-repeat="alert in alerts"
+				data-bs-alert="alert"></div>
+		</div>
 
-            <div data-ng-view></div>
-            <hr/>
+		<div data-ng-view></div>
 
-            <div><strong>Berserker</strong> -- Advanced Web-based frontend for Aria2-JSONRPC: v<span data-app-version></span><span id="copyright" class="pull-right">Copyright © 2013 - 2014 <a href="https://github.com/adityamukho" target="_blank">Aditya Mukhopadhyay</a></span></div>
+		<div class="mini-layout" id="info">
+			<div class="row">
+				<div class="box-title">
+					<div class="row">
+						<h4>Info</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row box-body">
+				<ol>
+					<li>You can close this window as well as the berserker server,
+						and Aria will continue to download in the backend.</li>
+					<li>Fire up the server and UI anytime later to interact with
+						Aria.</li>
+				</ol>
+			</div>
+		</div>
+		<hr />
 
-            <script src="lib/jquery/jquery.js"></script>
-            <script src="lib/angular/angular.js"></script>
-            <script src="lib/bootstrap/bootstrap.js"></script>
-            <script src="lib/angular-strap/angular-strap.js"></script>
-            <script src="lib/bootbox/bootbox.js"></script>
-            <script src="lib/slider/js/bootstrap-slider.js"></script>
-            <script src="js/app.js"></script>
-            <script src="js/modules.js"></script>
-            <script src="js/controllers.js"></script>
-        </div>
-    </body>
+		<div>
+			<strong>Berserker</strong> -- Advanced Web-based frontend for
+			Aria2-JSONRPC: v<span data-app-version></span><span id="copyright"
+				class="pull-right">Copyright © 2013 - 2014 <a
+				href="https://github.com/adityamukho" target="_blank">Aditya
+					Mukhopadhyay</a></span>
+		</div>
+
+		<script src="lib/jquery/jquery.js"></script>
+		<script src="lib/angular/angular.js"></script>
+		<script src="lib/bootstrap/bootstrap.js"></script>
+		<script src="lib/angular-strap/angular-strap.js"></script>
+		<script src="lib/bootbox/bootbox.js"></script>
+		<script src="lib/slider/js/bootstrap-slider.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/modules.js"></script>
+		<script src="js/controllers.js"></script>
+	</div>
+</body>
 </html>
