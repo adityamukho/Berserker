@@ -25,7 +25,7 @@ Run
     1. Keys in the *aria2c* property should be valid aria2c options (POSIX long version) without the '--'.
     1. Any value enclosed in curly braces (like {HOME}) will be replaced by the value of the corresponding environment variable.
 1. `$ berserker`
-1. Open <http://localhost:8000/> (Or whatever port you have set in `node/settings.json`).
+1. Open <http://localhost:8000/> (Or whatever port you have set in `$HOME/.berserker/settings.json`).
 
 Notes
 -----
