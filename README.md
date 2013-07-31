@@ -2,7 +2,7 @@ Berserker
 =========
 **Advanced web-based frontend for Aria2-JSONRPC.**
 
-![Main interface](/downloads.jpg)
+![Main interface](/screenshot.png)
 
 Features
 --------
