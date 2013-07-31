@@ -71,7 +71,7 @@ angular.module('Berserker.filters', []).filter('interpolate', ['version', functi
 });
 
 /* Services */
-angular.module('Berserker.services', []).value('version', '0.3.3');
+angular.module('Berserker.services', []).value('version', '0.3.4');
 
 /* Helper Functions */
 function sendCommand($scope, $http, command, data, defaultErrHandler) {
