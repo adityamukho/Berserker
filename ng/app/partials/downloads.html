@@ -103,16 +103,16 @@
 								<li><button class='btn btn-mini btn-warning'
 										data-ng-show="isActive(download)"
 										data-ng-click="alter(download, 'pause')">
-										<i class="icon-pause"></i>
+										<i class="icon-pause icon-white"></i>
 									</button></li>
 								<li><button class='btn btn-mini btn-success'
 										data-ng-show="isWaiting(download)"
 										data-ng-click="alter(download, 'unpause')">
-										<i class="icon-play"></i>
+										<i class="icon-play icon-white"></i>
 									</button></li>
 								<li><button class='btn btn-mini btn-danger'
 										data-ng-click="alterConfirm(download, 'remove', 'removeDownloadResult')">
-										<i class="icon-trash"></i>
+										<i class="icon-trash icon-white"></i>
 									</button></li>
 							</ul>
 							<dl class="dl-horizontal">
@@ -126,7 +126,7 @@
 									| bytes}}/s</dd>
 							</dl> <span class="badge percent-complete pull-left">{{percentComplete(download)}}%</span>
 							<div class="progress progress-striped">
-								<div class="bar" style="width: {{percentComplete(download)"></div>
+								<div class="bar" style="width: {{percentComplete(download)}}%;"></div>
 							</div>
 							<button class="btn btn-link btn-mini"
 								data-ng-click="showDetails(download)">Metadata</button>
