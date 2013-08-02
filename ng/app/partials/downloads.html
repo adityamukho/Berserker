@@ -97,8 +97,8 @@
               <dl class="dl-horizontal">
                 <dt data-ng-show="download.bittorrent.info">Torrent</dt>
                 <dd data-ng-show="download.bittorrent.info"><strong>{{download.bittorrent.info.name}}</strong></dd>
-                <dt data-ng-hide="download.bittorrent">File</dt>
-                <dd data-ng-hide="download.bittorrent"><strong>{{download.files[0].path.substring(download.files[0].path.lastIndexOf('/') + 1)}}</strong></dd>
+                <dt data-ng-hide="download.bittorrent.info">File</dt>
+                <dd data-ng-hide="download.bittorrent.info"><strong>{{download.files[0].path.substring(download.files[0].path.lastIndexOf('/') + 1)}}</strong></dd>
                 <dt>Size</dt>
                 <dd>{{download.totalLength | bytes}}</dd>
                 <dt>Completed</dt>
@@ -114,8 +114,8 @@
                     <li data-ng-repeat="uri in download.files[0].uris | unique: 'uri'">{{uri.uri}}</li>
                   </ol>
                 </dd>
-                <dt data-ng-show="download.files[0].path">File(s)</dt>
-                <dd data-ng-show="download.files[0].path">
+                <dt data-ng-show="download.bittorrent.info">File(s)</dt>
+                <dd data-ng-show="download.bittorrent.info">
                   <button class="btn btn-link btn-mini" data-ng-click="toggleCollapse($index, 'files')">{{getText($index, 'files')}}</button>
                   <ol id="files" data-ng-class="{collapse: true, in: dc.files[$index]}">
                     <li data-ng-repeat="file in download.files">{{filename(file.path)}}</li>
