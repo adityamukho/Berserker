@@ -40,17 +40,17 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
   };
 
   $scope.alter = function(download) {
-//        var i = 1;
-//        var args = arguments;
-//        function send() {
-//            sendCommand($scope, $http, 'aria2.' + args[i], [download.gid], false)
-//                    .success(function() {
-//                if (args[++i]) {
-//                    send();
-//                }
-//            });
-//        }
-//        send();
+// var i = 1;
+// var args = arguments;
+// function send() {
+// sendCommand($scope, $http, 'aria2.' + args[i], [download.gid], false)
+// .success(function() {
+// if (args[++i]) {
+// send();
+// }
+// });
+// }
+// send();
 
     for (var i = 1; i < arguments.length; ++i) {
       sendCommand($scope, $http, 'aria2.' + arguments[i], [download.gid], false);
@@ -118,6 +118,28 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
   $scope.getText = function(index, attr) {
     return $scope.dc[attr][index] ? 'Hide' : 'Show';
   };
+  
+  $scope.startAll = function() {
+	sendCommand($scope, $http, 'aria2.unpauseAll').success(
+		function(data, status) {
+		    $scope.$emit('ALERT', {
+			"type" : "success",
+			"title" : "Success",
+			"content" : "All downloads started."
+		    });
+		});
+  };
+
+  $scope.pauseAll = function() {
+	sendCommand($scope, $http, 'aria2.pauseAll').success(
+		function(data, status) {
+		    $scope.$emit('ALERT', {
+			"type" : "success",
+			"title" : "Success",
+			"content" : "All downloads paused."
+		    });
+		});
+  };
 
   function updateStatus() {
     sendCommand($scope, $http, 'aria2.getGlobalStat', null, false).success(function(data, status) {
@@ -152,7 +174,7 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     }
 
     $scope.cronid = $timeout(updateStatus, 1000 * $scope.interval);
-    return 'DownloadCtrl.updateStatus'; //cronid
+    return 'DownloadCtrl.updateStatus'; // cronid
   }
   updateStatus();
   $scope.$on('$destroy', function() {
