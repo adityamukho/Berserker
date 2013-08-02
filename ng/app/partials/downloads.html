@@ -95,10 +95,10 @@
             </td>
             <td>
               <dl class="dl-horizontal">
-                <dt data-ng-show="download.infoHash">Torrent</dt>
-                <dd data-ng-show="download.infoHash"><strong>{{download.bittorrent.info.name}}</strong></dd>
-                <dt data-ng-hide="download.infoHash">File</dt>
-                <dd data-ng-hide="download.infoHash"><strong>{{download.files[0].path.substring(download.files[0].path.lastIndexOf('/') + 1)}}</strong></dd>
+                <dt data-ng-show="download.bittorrent.info">Torrent</dt>
+                <dd data-ng-show="download.bittorrent.info"><strong>{{download.bittorrent.info.name}}</strong></dd>
+                <dt data-ng-hide="download.bittorrent">File</dt>
+                <dd data-ng-hide="download.bittorrent"><strong>{{download.files[0].path.substring(download.files[0].path.lastIndexOf('/') + 1)}}</strong></dd>
                 <dt>Size</dt>
                 <dd>{{download.totalLength | bytes}}</dd>
                 <dt>Completed</dt>
