@@ -9,6 +9,12 @@ var util = require('./util'),
 function init(config, conn) {
     //Routes
     var route = router();
+    
+    route.get('/aria-options', function ariaOptions(req, res) {
+      res.setHeader('Content-Type', 'application/json');
+      res.writeHead(200);
+      res.end(JSON.stringify(require('./aria2c_options.json')));
+    });
 
     route.post('/command/{cmd}', function command(req, res) {
         var goptions = {

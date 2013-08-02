@@ -237,6 +237,16 @@ function SettingsCtrl($scope, $http) {
     });
   }
   init();
+  
+  $http({
+    method: 'GET',
+    url: 'aria-options',
+    headers: {
+        Accept: "application/json"
+    }
+  }).success(function(data, status) {
+	  $scope.ariaOptions = data;
+  });
 
   $scope.filter = {
     query: '',

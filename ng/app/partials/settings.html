@@ -20,10 +20,10 @@
             <tr data-ng-repeat="setting in settings | settingsFilter:filter">
                 <td>{{$index + 1}}</td>
                 <td>{{setting.key}}</td>
-                <td><input type="text" data-ng-model="setting.value" name="{{setting.key}}" data-ng-change="markDirty(setting)" data-ng-class="{'ng-dirty': setting.dirty, 'ng-pristine': !setting.dirty}"/></td>
+                <td><input type="text" data-bs-tooltip="ariaOptions[setting.key]" data-placement="left" data-ng-model="setting.value" name="{{setting.key}}" data-ng-change="markDirty(setting)" data-ng-class="{'ng-dirty': setting.dirty, 'ng-pristine': !setting.dirty}"/></td>
             </tr>
         </tbody>
     </table>
     <button data-ng-click="update()" class="btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
-    <button data-ng-click="reset()" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Reset Form</button>
+    <button data-ng-click="reset(true)" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Reset Form</button>
 </form>
