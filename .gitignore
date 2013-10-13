@@ -1,4 +1,5 @@
 .nbrun
+build
 nbproject
 node_modules
 /node/package.json
