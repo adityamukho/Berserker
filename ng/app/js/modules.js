@@ -139,8 +139,9 @@ angular
 									case 'bitfield':
 									  var chars = value.split(""), spans = '';
 									  for ( var i = 0; i < chars.length; ++i) {
-										spans += '<li style="background: #0'
-											+ chars[i] + '0;"></li>';
+									  	var rb = (0xf - parseInt(chars[i], 16)).toString(16);
+										spans += '<li style="background: #'
+											+ rb + 'f' + rb + ';' + (chars[i] !== 'f' ? ' border: solid 1px #000' : '') + ';"></li>';
 									  }
 									  value = spans;
 									  tree += "<ul class='inline' id='bitfield'>" + value + "</ul>";
