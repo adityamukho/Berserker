@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h6>Add URL</h6>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal uri-form" name="httpForm">
+    <div class="control-group">
+      <label class="control-label" for="uri">URLs</label>
+      <div class="controls">
+        <textarea name="uris" required data-ng-model="uri.uris" placeholder="URLs" cols="150" rows="10" data-bs-tooltip="tooltip.uris" data-placement="bottom"></textarea>
+        <!--input type="text" id="text" name="uri" required data-ng-model="uri.uri" placeholder="URL" class="span3" data-bs-tooltip="tooltip.uri" data-placement="bottom"-->
+        <span class="error" data-ng-show="httpForm.uri.$error.required">[Required]</span>
+      </div>
+      <br>
+      <label class="control-label" for="dir">Destination</label>
+      <div class="controls">
+        <input type="text" id="dir" name="dir" data-ng-model="uri.options.dir" placeholder="Path" class="span3" data-bs-tooltip="tooltip.dir">
+      </div>
+      <br>
+      <label class="control-label" for="continue">Continue</label>
+      <div class="controls">
+        <input type="checkbox" id="continue" data-ng-model="uri.options.continue" name="continue" data-ng-true-value="true" data-ng-false-value="false" data-bs-tooltip="tooltip.continue" data-placement="right">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" data-ng-disabled="!httpForm.$valid" data-ng-click="addHttpBatch();hide()"><i class="icon-ok icon-white"></i> Add</button>
+  <button type="button" class="btn btn-inverse" data-ng-click="hide()"><i class="icon-remove icon-white"></i> Cancel</button>
+</div>

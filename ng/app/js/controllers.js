@@ -15,13 +15,14 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
   };
   $scope.tooltip = {
     uri: 'HTTP(s) / FTP / Magnet / Torrent / Metalink URL',
+    uris: 'HTTP(s) / FTP / Magnet / Torrent / Metalink URLs, one per line',
     "continue": 'Continue from a partial download started by curl, wget, a browser, etc.',
     dir: 'Download to specified folder.'
   };
 
   $scope.hex2bin = function(n) {
     function checkHex(n) {
-      return/^[0-9A-Fa-f]{1,64}$/.test(n);
+      return /^[0-9A-Fa-f]{1,64}$/.test(n);
     }
     if (!checkHex(n)) {
       return 0;
@@ -40,17 +41,17 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
   };
 
   $scope.alter = function(download) {
-// var i = 1;
-// var args = arguments;
-// function send() {
-// sendCommand($scope, $http, 'aria2.' + args[i], [download.gid], false)
-// .success(function() {
-// if (args[++i]) {
-// send();
-// }
-// });
-// }
-// send();
+    // var i = 1;
+    // var args = arguments;
+    // function send() {
+    // sendCommand($scope, $http, 'aria2.' + args[i], [download.gid], false)
+    // .success(function() {
+    // if (args[++i]) {
+    // send();
+    // }
+    // });
+    // }
+    // send();
 
     for (var i = 1; i < arguments.length; ++i) {
       sendCommand($scope, $http, 'aria2.' + arguments[i], [download.gid], false);
@@ -87,7 +88,7 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
 
   $scope.move = function(download, direction) {
     sendCommand($scope, $http, 'aria2.changePosition', [download.gid, direction, 'POS_CUR'], function(
-            data, status) {
+      data, status) {
       $scope.$emit('ALERT', {
         "type": "",
         "title": "Notice",
@@ -118,27 +119,27 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
   $scope.getText = function(index, attr) {
     return $scope.dc[attr][index] ? 'Hide' : 'Show';
   };
-  
+
   $scope.startAll = function() {
-	sendCommand($scope, $http, 'aria2.unpauseAll').success(
-		function(data, status) {
-		    $scope.$emit('ALERT', {
-			"type" : "success",
-			"title" : "Success",
-			"content" : "All downloads started."
-		    });
-		});
+    sendCommand($scope, $http, 'aria2.unpauseAll').success(
+      function(data, status) {
+        $scope.$emit('ALERT', {
+          "type": "success",
+          "title": "Success",
+          "content": "All downloads started."
+        });
+      });
   };
 
   $scope.pauseAll = function() {
-	sendCommand($scope, $http, 'aria2.pauseAll').success(
-		function(data, status) {
-		    $scope.$emit('ALERT', {
-			"type" : "success",
-			"title" : "Success",
-			"content" : "All downloads paused."
-		    });
-		});
+    sendCommand($scope, $http, 'aria2.pauseAll').success(
+      function(data, status) {
+        $scope.$emit('ALERT', {
+          "type": "success",
+          "title": "Success",
+          "content": "All downloads paused."
+        });
+      });
   };
 
   function updateStatus() {
@@ -148,18 +149,26 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
 
     var dlparams = [];
     if ($scope.switches.active) {
-      dlparams.push({methodName: 'aria2.tellActive'});
+      dlparams.push({
+        methodName: 'aria2.tellActive'
+      });
     }
     if ($scope.switches.waiting) {
-      dlparams.push({methodName: 'aria2.tellWaiting', params: [0, 10]});
+      dlparams.push({
+        methodName: 'aria2.tellWaiting',
+        params: [0, 10]
+      });
     }
     if ($scope.switches.stopped) {
-      dlparams.push({methodName: 'aria2.tellStopped', params: [0, 10]});
+      dlparams.push({
+        methodName: 'aria2.tellStopped',
+        params: [0, 10]
+      });
     }
 
     if (dlparams.length) {
       sendCommand($scope, $http, 'system.multicall', [dlparams], false).success(function(data,
-              status) {
+        status) {
         $scope.downloads.length = 0;
         for (var i = 0; i < data.result.length; ++i) {
           for (var j = 0; j < data.result[i][0].length; ++j)
@@ -168,8 +177,7 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
           $scope.dc.files.push(false);
         }
       });
-    }
-    else {
+    } else {
       $scope.downloads.length = 0;
     }
 
@@ -185,10 +193,16 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     $scope.version = data.result;
   });
 
-  $scope.tabs = [
-    {title: "HTTP", content: 'partials/httpTab.html'},
-    {title: "BitTorrent", content: 'partials/torrentTab.html'},
-    {title: "Metalink", content: 'partials/metalinkTab.html'}];
+  $scope.tabs = [{
+    title: "HTTP",
+    content: 'partials/httpTab.html'
+  }, {
+    title: "BitTorrent",
+    content: 'partials/torrentTab.html'
+  }, {
+    title: "Metalink",
+    content: 'partials/metalinkTab.html'
+  }];
   $scope.tabs.activeTab = 0;
 
   $scope.reset = function() {
@@ -205,15 +219,38 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     if (!$scope.uri.options.dir) {
       delete $scope.uri.options.dir;
     }
-    sendCommand($scope, $http, 'aria2.addUri', [[$scope.uri.uri], $scope.uri.options])
-            .success(function(data, status) {
-      $scope.$emit('ALERT', {
-        "type": "success",
-        "title": "Success",
-        "content": "URI: <code>" + $scope.uri.uri + "</code> added."
+    sendCommand($scope, $http, 'aria2.addUri', [
+      [$scope.uri.uri], $scope.uri.options
+    ])
+      .success(function(data, status) {
+        $scope.$emit('ALERT', {
+          "type": "success",
+          "title": "Success",
+          "content": "URI: <code>" + $scope.uri.uri + "</code> added."
+        });
+        $scope.reset();
       });
-      $scope.reset();
-    });
+  };
+
+  $scope.addHttpBatch = function() {
+    if (!$scope.uri.options.dir) {
+      delete $scope.uri.options.dir;
+    }
+
+    var lines = $scope.uri.uris.match(/[^\r\n]+/g);
+    for (var i in lines) {
+      sendCommand($scope, $http, 'aria2.addUri', [
+        [lines[i]], $scope.uri.options
+      ])
+        .success(function(data, status) {
+          $scope.$emit('ALERT', {
+            "type": "success",
+            "title": "Success",
+            "content": "URI: <code>" + $scope.uri.uri + "</code> added."
+          });
+          $scope.reset();
+        });
+    }
   };
 
   $scope.reset();
@@ -237,15 +274,15 @@ function SettingsCtrl($scope, $http) {
     });
   }
   init();
-  
+
   $http({
     method: 'GET',
     url: 'aria-options',
     headers: {
-        Accept: "application/json"
+      Accept: "application/json"
     }
   }).success(function(data, status) {
-	  $scope.ariaOptions = data;
+    $scope.ariaOptions = data;
   });
 
   $scope.filter = {
@@ -261,7 +298,7 @@ function SettingsCtrl($scope, $http) {
       }
     }
     sendCommand($scope, $http, 'aria2.changeGlobalOption', [changeset]).success(function(data,
-            status) {
+      status) {
       $scope.reset(true);
       init();
       $scope.$emit('ALERT', {
