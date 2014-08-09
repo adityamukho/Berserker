@@ -253,6 +253,16 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     }
   };
 
+  $scope.cleanLinks = function() {
+    var dirty = $scope.uri.uris;
+    $scope.uri.uris = "";
+    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return dirty.replace(urlRegex, function(url) {
+      $scope.uri.uris += url + "\n";
+    })
+
+  };
+
   $scope.reset();
   $('#update-slider').slider('setValue', $scope.interval).on('slide', function(ev) {
     $scope.interval = ev.value;
