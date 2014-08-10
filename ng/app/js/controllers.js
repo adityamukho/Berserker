@@ -14,8 +14,7 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     files: []
   };
   $scope.tooltip = {
-    uri: 'HTTP(s) / FTP / Magnet / Torrent / Metalink URL',
-    uris: 'HTTP(s) / FTP / Magnet / Torrent / Metalink URLs, one per line',
+    uri: 'HTTP(s) / FTP / Magnet / Torrent / Metalink URLs, one per line',
     "continue": 'Continue from a partial download started by curl, wget, a browser, etc.',
     dir: 'Download to specified folder.'
   };
@@ -219,23 +218,6 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     if (!$scope.uri.options.dir) {
       delete $scope.uri.options.dir;
     }
-    sendCommand($scope, $http, 'aria2.addUri', [
-      [$scope.uri.uri], $scope.uri.options
-    ])
-      .success(function(data, status) {
-        $scope.$emit('ALERT', {
-          "type": "success",
-          "title": "Success",
-          "content": "URI: <code>" + $scope.uri.uri + "</code> added."
-        });
-        $scope.reset();
-      });
-  };
-
-  $scope.addHttpBatch = function() {
-    if (!$scope.uri.options.dir) {
-      delete $scope.uri.options.dir;
-    }
 
     var lines = $scope.uri.uris.match(/[^\r\n]+/g);
     for (var i in lines) {
@@ -260,7 +242,6 @@ function DownloadCtrl($scope, $http, $timeout, $modal, $rootScope) {
     return dirty.replace(urlRegex, function(url) {
       $scope.uri.uris += url + "\n";
     })
-
   };
 
   $scope.reset();
