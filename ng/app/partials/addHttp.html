@@ -5,9 +5,10 @@
 <div class="modal-body">
   <form class="form-horizontal uri-form" name="httpForm">
     <div class="control-group">
-      <label class="control-label" for="uri">URL</label>
+      <label class="control-label" for="uri">URLs</label>
       <div class="controls">
-        <input type="text" id="text" name="uri" required data-ng-model="uri.uri" placeholder="URL" class="span3" data-bs-tooltip="tooltip.uri" data-placement="bottom">
+        <textarea name="uris" required data-ng-model="uri.uris" placeholder="URLs" cols="80" rows="10" data-bs-tooltip="tooltip.uris" data-placement="bottom"></textarea>
+        <p><button class="btn btn-mini" ng-click="cleanLinks()">Clean Urls</button></p>
         <span class="error" data-ng-show="httpForm.uri.$error.required">[Required]</span>
       </div>
       <br>
