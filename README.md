@@ -1,5 +1,3 @@
-_This is a fork of the original [Berserker ](https://github.com/adityamukho/Berserker) to add functionality to add multiple urls at once and maybe more._
-
 Berserker
 =========
 **Advanced web-based frontend for Aria2-JSONRPC.**
