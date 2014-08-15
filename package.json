@@ -5,8 +5,18 @@
   "main": "node/berserker.js",
   "author": {
     "name": "Aditya Mukhopadhyay",
-    "email": "aditya.mukhopadhyay@gmail.com"
+    "email": "aditya.mukhopadhyay@gmail.com",
+    "url": "http://adityamukho.com/"
   },
+  "contributors": [{
+    "name": "Aditya Mukhopadhyay",
+    "email": "aditya.mukhopadhyay@gmail.com",
+    "url": "http://adityamukho.com/"
+  }, {
+    "name": "Michael Zehrer",
+    "email": "zehrer@zepan.org",
+    "url": "http://www.zepan.org"
+  }],
   "keywords": [
     "download manager",
     "bittorrent",
