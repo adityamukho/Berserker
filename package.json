@@ -1,7 +1,7 @@
 {
   "name": "berserker",
   "description": "Web-based frontend for Aria2-JSONRPC",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "main": "node/berserker.js",
   "author": {
     "name": "Aditya Mukhopadhyay",
