@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'development') {
   memwatch.on('leak', function(info) {
 	console.log("DEBUG: LEAK: %j", info);
   });
-  
+
   memwatch.on('stats', function(stats) {
 	console.log("DEBUG: STATS %j", stats);
   });

@@ -141,7 +141,7 @@ angular
 									  for ( var i = 0; i < chars.length; ++i) {
 									  	var rb = (0xf - parseInt(chars[i], 16)).toString(16);
 										spans += '<li style="background: #'
-											+ rb + 'f' + rb + ';' + (chars[i] !== 'f' ? ' border: solid 1px #000' : '') + ';"></li>';
+											+ rb + 'f' + rb + '; border: solid 1px ' + (chars[i] === 'f' ? '#fff' : '#000') + ';"></li>';
 									  }
 									  value = spans;
 									  tree += "<ul class='inline' id='bitfield'>" + value + "</ul>";
