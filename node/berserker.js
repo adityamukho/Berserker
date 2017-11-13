@@ -26,7 +26,7 @@ require('./server')(config, conn);
 
 //Debug memleaks
 if (process.env.NODE_ENV === 'development') {
-  var memwatch = require('memwatch');
+  var memwatch = require('memwatch-next');
   memwatch.on('leak', function(info) {
 	console.log("DEBUG: LEAK: %j", info);
   });

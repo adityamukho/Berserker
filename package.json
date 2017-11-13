@@ -8,15 +8,18 @@
     "email": "aditya.mukhopadhyay@gmail.com",
     "url": "http://adityamukho.com/"
   },
-  "contributors": [{
-    "name": "Aditya Mukhopadhyay",
-    "email": "aditya.mukhopadhyay@gmail.com",
-    "url": "http://adityamukho.com/"
-  }, {
-    "name": "Michael Zehrer",
-    "email": "zehrer@zepan.org",
-    "url": "http://www.zepan.org"
-  }],
+  "contributors": [
+    {
+      "name": "Aditya Mukhopadhyay",
+      "email": "aditya.mukhopadhyay@gmail.com",
+      "url": "http://adityamukho.com/"
+    },
+    {
+      "name": "Michael Zehrer",
+      "email": "zehrer@zepan.org",
+      "url": "http://www.zepan.org"
+    }
+  ],
   "keywords": [
     "download manager",
     "bittorrent",
@@ -35,10 +38,10 @@
     "type": "apache20"
   },
   "dependencies": {
-    "router": "0.6.2",
     "mime": "1.2.9",
-    "websocket": "1.0.8",
-    "mkdirp": "0.3.5"
+    "mkdirp": "0.3.5",
+    "router": "0.6.2",
+    "websocket": "1.0.8"
   },
   "scripts": {
     "start": "node ./node/berserker.js"
@@ -51,6 +54,6 @@
   },
   "preferGlobal": true,
   "devDependencies": {
-    "memwatch": "~0.2.2"
+    "memwatch-next": "^0.3.0"
   }
 }
